@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import Modal from "../component/Modal";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   setOpenSigninPopup,
   setOpenLoginPopup,
@@ -12,7 +13,7 @@ import Button from "../component/Button";
 
 const Signup = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +25,13 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signupUser({ name, email, password }));
+    dispatch(signupUser({ name, email, password }))
+    .then(() => {
+      navigate('/')
+      window.location.reload()
+    }).catch((error)=> {
+      console.log(error)
+    })
   };
 
   return (

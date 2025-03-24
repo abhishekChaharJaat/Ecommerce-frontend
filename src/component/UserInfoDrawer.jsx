@@ -1,5 +1,6 @@
 // UserInfoDrawer.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaUserCircle,
   FaPhone,
@@ -27,7 +28,7 @@ import Button from "./Button";
 
 const UserInfoDrawer = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const user = useSelector((state) => state.userSlice.user);
   const isLoggedIn = useSelector((state) => state.userSlice.isLoggedIn);
 
@@ -43,7 +44,8 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
   const handleLogout = () => {
     dispatch(logout());
     toast.success("Logout successfully");
-    window.location.reload();
+     navigate('/')
+     window.location.reload()
   }
 
   return (

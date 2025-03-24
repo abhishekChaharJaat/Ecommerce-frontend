@@ -11,7 +11,7 @@ const AdminPage = () => {
         Admin Panel - Add Product
       </h1>
       <AddNewProduct />
-      <div className="h-96 border w-[1000px] mx-auto my-10">
+      <div className="w-full md:h-96 border mx-auto my-10">
         <p className="text-[20px] font-bold text-center text-red-900">
           {" "}
           All Orders

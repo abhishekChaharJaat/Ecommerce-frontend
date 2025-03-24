@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaShoppingCart, FaTimes, FaBars, FaUserShield } from "react-icons/fa";
+import { FaShoppingCart, FaTimes, FaBars, FaUserShield, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,9 +13,10 @@ import SearchBar from "../component/SearchBar";
 const Header = () => {
   const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
+  
   const isLoggedIn = useSelector((state) => state.userSlice.isLoggedIn);
   const user = useSelector((state) => state.userSlice.user);
+  const loading = useSelector((state) => state.userSlice.loading);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -60,9 +61,9 @@ const Header = () => {
 
           {/* Cart and User Actions */}
           <div className="flex items-center gap-x-6">
-            {isLoggedIn ? (
+            {isLoggedIn || loading? (
               <>
-                {user?.role === 1 && (
+                {user?.role === 1  && (
                   <Link
                     to="/admin"
                     className="relative hover:text-blue-600 mr-2"
@@ -81,13 +82,14 @@ const Header = () => {
                   </span>
                 </button>
                 <div className="hidden md:flex gap-[8px] justify-center items-center">
-                  {/* <span className="username">{"Abhishek Chahar"}</span> */}
+                 {user?.profilePicture ?
                   <img
                     src={user?.profilePicture}
                     alt="User profile"
                     className="ml-6 w-12 h-12 border rounded-full object-cover ring-2 ring-indigo-400 hover:ring-offset-1 hover:ring-slat-400 cursor-pointer"
                     onClick={() => dispatch(setOpenUserInfoDrawer(true))}
-                  />
+                  /> :  <FaUserCircle className="w-12 h-12" />
+                  }
                 </div>
               </>
             ) : (
