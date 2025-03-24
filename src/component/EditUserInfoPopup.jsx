@@ -111,7 +111,7 @@ const EditUserInfoPopup = () => {
       isHeader={true}
       title="Edit Your Profile"
     >
-      <div className="w-full h-full md:h-[450px] sm:w-[700px] mx-auto p-6 bg-white rounded-lg shadow-lg overflow-y-scroll scrollbar-hide">
+      <div className="w-full h-auto md:h-[450px] sm:w-[700px] mx-auto p-6 bg-white rounded-lg shadow-lg overflow-y-scroll scrollbar-hide">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Profile Picture */}
           <div className="flex justify-center items-center">

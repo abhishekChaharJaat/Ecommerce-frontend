@@ -6,13 +6,13 @@ const Modal = ({ isOpen, onClose, children, title, isHeader, className }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
+    <div className="fixed inset-0 z-50 h-screen flex items-center justify-center overflow-x-hidden overflow-y-auto">
       {/* Overlay */}
       <div className="fixed inset-0 bg-black opacity-50 transition-opacity duration-300" />
 
       {/* Modal Content */}
       <div
-        className={`w-full md:w-auto md:h-auto relative overflow-y-auto mx-1 overflow-hidden rounded-[8px] bg-white shadow-xl transform transition-all duration-300 scale-100 ${className}`}
+        className={`w-full h-[95%] md:w-auto md:h-auto relative overflow-y-auto mx-1 overflow-hidden rounded-[8px] bg-white shadow-xl transform transition-all duration-300 scale-100 ${className}`}
       >
         {isHeader ? (
           <div className="flex justify-between items-center p-4 border-b border-gray-200">
