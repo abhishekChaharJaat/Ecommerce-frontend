@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaShoppingCart, FaTimes, FaBars, FaUserShield, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import profile from '../Images/profile.webp'
 import { useDispatch, useSelector } from "react-redux";
 import {
   setOpenLoginPopup,
@@ -61,7 +62,7 @@ const Header = () => {
 
           {/* Cart and User Actions */}
           <div className="flex items-center gap-x-6">
-            {isLoggedIn || loading? (
+            {isLoggedIn || loading ? (
               <>
                 {user?.role === 1  && (
                   <Link
@@ -82,14 +83,12 @@ const Header = () => {
                   </span>
                 </button>
                 <div className="hidden md:flex gap-[8px] justify-center items-center">
-                 {user?.profilePicture ?
                   <img
-                    src={user?.profilePicture}
+                    src={user?.profilePicture ? user?.profilePicture : profile }
                     alt="User profile"
                     className="ml-6 w-12 h-12 border rounded-full object-cover ring-2 ring-indigo-400 hover:ring-offset-1 hover:ring-slat-400 cursor-pointer"
                     onClick={() => dispatch(setOpenUserInfoDrawer(true))}
-                  /> :  <FaUserCircle className="w-12 h-12" />
-                  }
+                  /> 
                 </div>
               </>
             ) : (

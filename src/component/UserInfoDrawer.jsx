@@ -104,7 +104,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
                 dispatch(setOpenUserInfoDrawer(false));
               }}
             >
-              Products
+              Home
             </Link>
             <Link
               to="/about"

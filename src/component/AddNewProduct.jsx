@@ -106,7 +106,7 @@ const AddNewProduct = () => {
     <div
       className={`${
         isFormOpen ? "ring-1" : ""
-      } max-w-[1000px] md:mx-auto md:rounded-[8px] bg-white mx-1`}
+      } max-w-[1000px] md:mx-auto md:rounded-[8px] bg-white`}
     >
       {/* Toggle Button */}
       <button
