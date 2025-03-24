@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+* {
+  transition: all 0.2s;
+}
+
+::-webkit-scrollbar {
+  /* Customize the scrollbar width */
+  width: 1px;
+}
+::-webkit-scrollbar-track {
+  /* Customize the scrollbar track */
+  background-color: black;
+}
+::-webkit-scrollbar-thumb {
+  /* Customize the scrollbar thumb */
+  border-radius: 10px;
+  background-color: white;
+}
