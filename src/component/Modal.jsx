@@ -12,7 +12,7 @@ const Modal = ({ isOpen, onClose, children, title, isHeader, className }) => {
 
       {/* Modal Content */}
       <div
-        className={`w-full h-[95%] md:w-auto md:h-auto relative overflow-y-auto mx-1 overflow-hidden rounded-[8px] bg-white shadow-xl transform transition-all duration-300 scale-100 ${className}`}
+        className={`w-full max-h-[92%] md:w-auto md:h-auto relative overflow-y-auto mx-1 overflow-hidden rounded-[8px] bg-white shadow-xl transform transition-all duration-300 scale-100 ${className}`}
       >
         {isHeader ? (
           <div className="flex justify-between items-center p-4 border-b border-gray-200">
