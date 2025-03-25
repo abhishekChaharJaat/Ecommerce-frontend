@@ -21,14 +21,14 @@ import {
   setOpenSigninPopup,
   setOpenLoginPopup,
 } from "../store/userSlice";
-import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import Button from "./Button";
+import { toast } from "react-toastify";
 
 const UserInfoDrawer = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const user = useSelector((state) => state.userSlice.user);
   const isLoggedIn = useSelector((state) => state.userSlice.isLoggedIn);
 
@@ -42,10 +42,12 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
   //   };
 
   const handleLogout = () => {
-        dispatch(logout())
-        navigate('/');
-        window.location.reload();  
-        window.scrollTo(0, 0);
+    dispatch(logout());
+    if (!localStorage.getItem("token")) {
+      toast.success("Logout");
+    }
+    navigate("/");
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -96,7 +98,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
         {/* Scrollable content container */}
 
         <div className="p-5 h-[calc(100%-64px)] overflow-y-auto scrollbar-hide flex flex-col gap-y-6">
-        <div className=" flex flex-col space-y-4  bg-gray-50 p-4 rounded-lg">
+          <div className=" flex flex-col space-y-4  bg-gray-50 p-4 rounded-lg">
             <Link
               to="/"
               className="text-[#18475A] font-[700] hover:text-blue-600 transition-colors"
@@ -126,60 +128,62 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
             </Link>
           </div>
 
-   <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
-  <p className="text-[18px] md:text-[20px] font-[600] italic">Personal Info</p>
-  <div className="flex items-center justify-between py-2 border-b border-gray-100">
-    <span className="font-medium text-gray-700 flex items-center gap-2">
-      <FaUser className="text-indigo-500" /> Name
-    </span>
-    <span className="text-gray-600 text-sm md:text-base"> {/* Adjusted text size for mobile vs desktop */}
-      {user?.name || "Not provided"}
-    </span>
-  </div>
-  <div className="flex items-center justify-between py-2 border-b border-gray-100">
-    <span className="font-medium text-gray-700 flex items-center gap-2">
-      <FaEnvelope className="text-indigo-500" /> Email
-    </span>
-    <span className="text-gray-600 text-sm md:text-base">
-      {user?.email || "Not provided"}
-    </span>
-  </div>
-  <div className="flex items-center justify-between py-2 border-b border-gray-100">
-    <span className="font-medium text-gray-700 flex items-center gap-2">
-      <FaPhone className="text-indigo-500" /> Phone
-    </span>
-    <span className="text-gray-600 text-sm md:text-base">
-      +91 {user?.phone || "Not provided"}
-    </span>
-  </div>
-  <div className="flex items-center justify-between py-2 border-b border-gray-100 gap-6">
-    <span className="font-medium text-gray-700 flex items-center gap-2">
-      <FaMapMarkerAlt className="text-indigo-500" /> Address
-    </span>
-    <span className="text-end text-gray-600 text-sm md:text-base">
-      {user?.address || "Not provided"}
-    </span>
-  </div>
-  <div className="flex items-center justify-between py-2 border-b border-gray-100">
-    <span className="font-medium text-gray-700 flex items-center gap-2">
-      <PiMapPinSimpleAreaBold className="text-indigo-500" /> Pin
-      code{" "}
-    </span>
-    <span className="text-gray-600 text-sm md:text-base">
-      {user?.pincode || 0}
-    </span>
-  </div>
-  <div className="flex items-center justify-between py-2 border-b border-gray-100">
-    <span className="font-medium text-gray-700 flex items-center gap-2">
-      <FaVenus className="text-indigo-500" /> Gender{" "}
-    </span>
-    <span className="text-gray-600 text-sm md:text-base">
-      {user?.gender || 0}
-    </span>
-  </div>
-</div>
+          <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
+            <p className="text-[18px] md:text-[20px] font-[600] italic">
+              Personal Info
+            </p>
+            <div className="flex items-center justify-between py-2 border-b border-gray-100">
+              <span className="font-medium text-gray-700 flex items-center gap-2">
+                <FaUser className="text-indigo-500" /> Name
+              </span>
+              <span className="text-gray-600 text-sm md:text-base">
+                {" "}
+                {/* Adjusted text size for mobile vs desktop */}
+                {user?.name || "Not provided"}
+              </span>
+            </div>
+            <div className="flex items-center justify-between py-2 border-b border-gray-100">
+              <span className="font-medium text-gray-700 flex items-center gap-2">
+                <FaEnvelope className="text-indigo-500" /> Email
+              </span>
+              <span className="text-gray-600 text-sm md:text-base">
+                {user?.email || "Not provided"}
+              </span>
+            </div>
+            <div className="flex items-center justify-between py-2 border-b border-gray-100">
+              <span className="font-medium text-gray-700 flex items-center gap-2">
+                <FaPhone className="text-indigo-500" /> Phone
+              </span>
+              <span className="text-gray-600 text-sm md:text-base">
+                +91 {user?.phone || "Not provided"}
+              </span>
+            </div>
+            <div className="flex items-center justify-between py-2 border-b border-gray-100 gap-6">
+              <span className="font-medium text-gray-700 flex items-center gap-2">
+                <FaMapMarkerAlt className="text-indigo-500" /> Address
+              </span>
+              <span className="text-end text-gray-600 text-sm md:text-base">
+                {user?.address || "Not provided"}
+              </span>
+            </div>
+            <div className="flex items-center justify-between py-2 border-b border-gray-100">
+              <span className="font-medium text-gray-700 flex items-center gap-2">
+                <PiMapPinSimpleAreaBold className="text-indigo-500" /> Pin code{" "}
+              </span>
+              <span className="text-gray-600 text-sm md:text-base">
+                {user?.pincode || 0}
+              </span>
+            </div>
+            <div className="flex items-center justify-between py-2 border-b border-gray-100">
+              <span className="font-medium text-gray-700 flex items-center gap-2">
+                <FaVenus className="text-indigo-500" /> Gender{" "}
+              </span>
+              <span className="text-gray-600 text-sm md:text-base">
+                {user?.gender || 0}
+              </span>
+            </div>
+          </div>
 
-      
           {isLoggedIn ? (
             <div className="space-y-3 pb-5">
               <button

@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserInfo } from "../store/userSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { resetErrorSucces } from "../store/userSlice";
 
 const Constants = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const userError = useSelector((state) => state.userSlice.error);
   const userSuccessMessage = useSelector(
@@ -27,10 +30,18 @@ const Constants = () => {
   useEffect(() => {
     if (userSuccessMessage) {
       toast.success(userSuccessMessage);
-    } else {
+    }
+    dispatch(resetErrorSucces());
+    navigate("/");
+    window.scrollTo(0, 0);
+  }, [userSuccessMessage]);
+
+  useEffect(() => {
+    if (userError) {
       toast.error(userError);
     }
-  }, [userError, userSuccessMessage]);
+    dispatch(resetErrorSucces());
+  }, [userError]);
 
   // For productSlice Toast
   useEffect(() => {

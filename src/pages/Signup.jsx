@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import Modal from "../component/Modal";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,7 @@ import Button from "../component/Button";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,15 +24,16 @@ const Signup = () => {
   const loading = useSelector((state) => state.userSlice.loading);
 
   const handleSubmit = (e) => {
+    const data = { name, email, password };
+    setName("");
+    setEmail("");
+    setPassword("");
     e.preventDefault();
-    dispatch(signupUser({ name, email, password }))
-    .then(() => {
-      navigate('/')
-      window.location.reload()
-    }).catch((error)=> {
-      console.log(error)
-    })
+    dispatch(signupUser(data));
+    window.scrollTo(0, 0);
   };
+
+  useEffect(() => {});
 
   return (
     <Modal

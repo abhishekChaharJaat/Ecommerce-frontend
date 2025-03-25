@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import Modal from "../component/Modal";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,10 +10,10 @@ import {
 } from "../store/userSlice";
 import Input from "../component/Input";
 import Button from "../component/Button";
-
+import { ToastContainer, toast } from "react-toastify";
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,18 +22,17 @@ const Login = () => {
   );
 
   const loading = useSelector((state) => state.userSlice.loading);
+  const error = useSelector((state) => state.userSlice.error);
+  const successMessage = useSelector((state) => state.userSlice.successMessage);
+  const authUser = localStorage.getItem("token");
 
   const handleSubmit = (e) => {
     const data = { email, password };
     e.preventDefault();
     setEmail("");
     setPassword("");
-    dispatch(loginUser(data)).then(() => {
-      navigate('/')
-      window.location.reload()
-    }).catch((error)=> {
-      console.log(error)
-    })
+    dispatch(loginUser(data));
+    // window.scrollTo(0, 0);
   };
 
   return (

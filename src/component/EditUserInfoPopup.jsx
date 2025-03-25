@@ -63,8 +63,7 @@ const EditUserInfoPopup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted with data: ", formData);
-    dispatch(updateUser(formData)); // Dispatch update user action
+    dispatch(updateUser(formData));
   };
 
   useEffect(() => {
@@ -230,11 +229,7 @@ const EditUserInfoPopup = () => {
               }}
               className="!bg-transparent !text-black"
             />
-            <Button
-              type="submit"
-              title="Save All Changes"
-              loading={loading}
-            />
+            <Button type="submit" title="Save All Changes" loading={loading} />
           </div>
         </form>
       </div>

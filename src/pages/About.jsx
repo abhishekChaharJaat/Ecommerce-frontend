@@ -32,7 +32,7 @@ const About = () => {
                 Our Story
               </h2>
               <p className="text-gray-600 leading-relaxed">
-                Founded in 2023, ShopSphere started with a simple mission: to
+                Founded in 2025, ShopSphere started with a simple mission: to
                 make online shopping accessible, enjoyable, and affordable for
                 everyone. From humble beginnings, we’ve grown into a trusted
                 platform offering a wide range of products, from fashion to

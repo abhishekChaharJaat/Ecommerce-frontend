@@ -129,6 +129,10 @@ const userSlice = createSlice({
       state.isOpenUserInfoDrawer = false;
       state.error = null;
     },
+    resetErrorSucces: (state, action) => {
+      state.error = null;
+      state.successMessage = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -140,7 +144,7 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token; // Store token in state
-        localStorage.setItem("token", action.payload.token); // Store token in localStorage
+        localStorage.setItem("token", action.payload.token);
         state.user = action.payload.user || null; // Store user data if provided
         state.isOpenLoginPopup = false; // Close login popup
         state.successMessage = action.payload.message;
@@ -165,7 +169,6 @@ const userSlice = createSlice({
       .addCase(signupUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        console.log(action.payload);
       })
       // Fetch user info cases
       .addCase(fetchUserInfo.pending, (state) => {
@@ -204,5 +207,6 @@ export const {
   setOpenSigninPopup,
   setOpenUserInfoDrawer,
   setOpenEditProfilePopup,
+  resetErrorSucces,
 } = userSlice.actions;
 export default userSlice.reducer;
