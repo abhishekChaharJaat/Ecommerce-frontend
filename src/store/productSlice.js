@@ -56,13 +56,22 @@ const initialState = {
   error: null, // Stores error messages
   success: false, // Indicates successful addition
   successMessage: null,
+  selectedProduct:{},
+  isShowSelectedProduct:false,
 };
 
 // Create slice
 const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedProduct:(state, action) => {
+       state.selectedProduct = action.payload
+    },
+    setShowSelectProduct: (state, action) => {
+      state.isShowSelectedProduct =action.payload
+    }
+  },
   extraReducers: (builder) => {
     // Handle addNewProduct pending state
     builder
@@ -107,5 +116,5 @@ const productSlice = createSlice({
 });
 
 // Export actions
-export const { resetProductState } = productSlice.actions;
+export const { resetProductState, setSelectedProduct, setShowSelectProduct } = productSlice.actions;
 export default productSlice.reducer;

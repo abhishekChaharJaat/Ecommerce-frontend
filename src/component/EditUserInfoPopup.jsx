@@ -30,26 +30,10 @@ const EditUserInfoPopup = () => {
     gender: "",
   });
 
-  const [editMode, setEditMode] = useState({
-    name: false,
-    email: false,
-    phone: false,
-    address: false,
-    pincode: false,
-    admin: false,
-  });
-
   const isOpenEditProfilePopup = useSelector(
     (state) => state.userSlice.isOpenEditProfilePopup
   );
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -77,16 +61,10 @@ const EditUserInfoPopup = () => {
     }
   };
 
-  const toggleEditMode = (field) => {
-    setEditMode({
-      ...editMode,
-      [field]: !editMode[field],
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted with data: ", formData);
+    dispatch(updateUser(formData)); // Dispatch update user action
   };
 
   useEffect(() => {
@@ -142,7 +120,7 @@ const EditUserInfoPopup = () => {
             </div>
           </div>
           {/* Name */}
-          <div className="space-y-1 relative">
+          <div className="space-y-1">
             <Input
               label="Name"
               icon={<FaUserAlt className="!text-gray-500" />}
@@ -151,44 +129,24 @@ const EditUserInfoPopup = () => {
               placeholder="Your Name"
               value={formData.name}
               onChange={handleChange}
-              disabled={!editMode.name}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
-            <button
-              type="button"
-              onClick={() => toggleEditMode("name")}
-              className={`absolute bottom-3 cursor-pointer right-4 p- font-[600] italic ${
-                editMode.name ? "text-green-700" : "text-blue-700"
-              }`}
-            >
-              {editMode.name ? "Save" : "Edit"}
-            </button>
           </div>
           {/* Email */}
-          <div className="space-y-1 relative">
+          <div className="space-y-1">
             <Input
-              label="Emal"
+              label="Email"
               icon={<FaEnvelope className="!text-gray-500" />}
               type="text"
               name="email"
               placeholder="Your Email"
               value={formData.email}
               onChange={handleChange}
-              disabled={!editMode.email}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
-            <button
-              type="button"
-              onClick={() => toggleEditMode("email")}
-              className={`absolute bottom-3 cursor-pointer right-4 p- font-[600] italic ${
-                editMode.email ? "text-green-700" : "text-blue-700"
-              }`}
-            >
-              {editMode.email ? "Save" : "Edit"}
-            </button>
           </div>
           {/* Phone */}
-          <div className="space-y-1 relative">
+          <div className="space-y-1">
             <Input
               label="Phone No."
               icon={<FaPhoneAlt className="!text-gray-500" />}
@@ -197,21 +155,11 @@ const EditUserInfoPopup = () => {
               placeholder="Your Phone no."
               value={formData.phone}
               onChange={handleChange}
-              disabled={!editMode.phone}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
-            <button
-              type="button"
-              onClick={() => toggleEditMode("phone")}
-              className={`absolute bottom-3 cursor-pointer right-4 p- font-[600] italic ${
-                editMode.phone ? "text-green-700" : "text-blue-700"
-              }`}
-            >
-              {editMode.phone ? "Save" : "Edit"}
-            </button>
           </div>
           {/* Address */}
-          <div className="space-y-1 relative">
+          <div className="space-y-1">
             <Input
               label="Address"
               icon={<FaMapMarkerAlt className="!text-gray-500" />}
@@ -220,18 +168,8 @@ const EditUserInfoPopup = () => {
               placeholder="Your Full Address"
               value={formData.address}
               onChange={handleChange}
-              disabled={!editMode.address}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
-            <button
-              type="button"
-              onClick={() => toggleEditMode("address")}
-              className={`absolute bottom-3 cursor-pointer right-4 p- font-[600] italic ${
-                editMode.address ? "text-green-700" : "text-blue-700"
-              }`}
-            >
-              {editMode.address ? "Save" : "Edit"}
-            </button>
           </div>
           {/* Gender */}
           <div className="space-y-1">
@@ -239,13 +177,12 @@ const EditUserInfoPopup = () => {
               Gender
             </label>
             <div className="flex items-center space-x-3">
-              {/* <FaGenderless className="text-gray-500" /> */}
               <select
                 name="gender"
                 id="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
@@ -255,7 +192,7 @@ const EditUserInfoPopup = () => {
             </div>
           </div>
           {/* Pincode */}
-          <div className="space-y-1 relative">
+          <div className="space-y-1">
             <Input
               label="Pincode"
               icon={<PiMapPinSimpleAreaBold className="!text-gray-500" />}
@@ -264,45 +201,30 @@ const EditUserInfoPopup = () => {
               placeholder="Your Pincode"
               value={formData.pincode}
               onChange={handleChange}
-              disabled={!editMode.pincode}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
-            <button
-              type="button"
-              onClick={() => toggleEditMode("pincode")}
-              className={`absolute bottom-3 cursor-pointer right-4 p- font-[600] italic ${
-                editMode.pincode ? "text-green-700" : "text-blue-700"
-              }`}
-            >
-              {editMode.pincode ? "Save" : "Edit"}
-            </button>
           </div>
-          <div className="space-y-1 relative">
+          {/* Role */}
+          <div className="space-y-1">
             <Input
-              label={` ${formData?.role === 0 ? "Admin banne k lie security code dale": "Yor are now Admin" }`}
+              label={`${
+                formData?.role === 0
+                  ? "Admin banne k lie security code dale"
+                  : "Yor are now Admin"
+              }`}
               icon={<FaStar className="!text-gray-500" />}
               type="number"
               name="role"
               placeholder="Admin banne k lie security code dale"
               value={formData?.role}
               onChange={handleChange}
-              disabled={!editMode.admin}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
-            <button
-              type="button"
-              onClick={() => toggleEditMode("admin")}
-              className={`absolute bottom-3 cursor-pointer right-4 p- font-[600] italic ${
-                editMode.admin ? "text-green-700" : "text-blue-700"
-              }`}
-            >
-              {editMode.admin ? "Save" : "Edit"}
-            </button>
           </div>
           <div className="flex gap-[12px] justify-end">
             <Button
               type="cancle"
-              title="Cancle"
+              title="Cancel"
               onClick={() => {
                 dispatch(setOpenEditProfilePopup(false));
               }}
@@ -311,9 +233,6 @@ const EditUserInfoPopup = () => {
             <Button
               type="submit"
               title="Save All Changes"
-              onClick={() => {
-                dispatch(updateUser(formData));
-              }}
               loading={loading}
             />
           </div>

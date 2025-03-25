@@ -42,11 +42,11 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
   //   };
 
   const handleLogout = () => {
-    dispatch(logout());
-    toast.success("Logout successfully");
-     navigate('/')
-     window.location.reload()
-  }
+        dispatch(logout())
+        navigate('/');
+        window.location.reload();  
+        window.scrollTo(0, 0);
+  };
 
   return (
     <>
@@ -99,7 +99,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
           <div className="md:hidden flex flex-col space-y-4 border-b-[1px] border-slate-300 pb-8">
             <Link
               to="/"
-              className="text-gray-600 font-medium hover:text-blue-600 transition-colors"
+              className="text-[#18475A] font-[700] text-xl hover:text-blue-600 transition-colors"
               onClick={() => {
                 dispatch(setOpenUserInfoDrawer(false));
               }}
@@ -108,7 +108,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
             </Link>
             <Link
               to="/about"
-              className="text-gray-600 font-medium hover:text-blue-600 transition-colors"
+              className="text-[#18475A] font-[700] text-xl hover:text-blue-600 transition-colors"
               onClick={() => {
                 dispatch(setOpenUserInfoDrawer(false));
               }}
@@ -117,7 +117,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
             </Link>
             <Link
               to="/categories"
-              className="text-gray-600 font-medium hover:text-blue-600 transition-colors"
+              className="text-[#18475A] font-[700] text-xl hover:text-blue-600 transition-colors"
               onClick={() => {
                 dispatch(setOpenUserInfoDrawer(false));
               }}
@@ -126,9 +126,9 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
             </Link>
           </div>
 
-          {isLoggedIn && (
+         
             <div className="space-y-4 mb-6 bg-gray-50 p-4 rounded-lg">
-              <p className="text-[20px] font-bold italic">Personal Info</p>
+              <p className="text-[18px] md:text-[20px] font-[600] italic">Personal Info</p>
               <div className="flex items-center justify-between py-2 border-b border-gray-100">
                 <span className="font-medium text-gray-700 flex items-center gap-2">
                   <FaUser ne className="text-indigo-500" /> Name
@@ -175,7 +175,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
                 <span className="text-gray-600">{user?.gender || 0}</span>
               </div>
             </div>
-          )}
+      
 
           {isLoggedIn ? (
             <div className="space-y-3 pb-5">
@@ -196,7 +196,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
               </button>
             </div>
           ) : (
-            <div className="py-10 flex flex-col gap-[16px] ">
+            <div className="py-4 flex flex-col gap-[16px] ">
               <Button
                 type=""
                 className="!bg-transparent !text-black md:hidden !ring-2 ring-offset-1 ring-slat-400"

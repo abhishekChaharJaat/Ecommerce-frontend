@@ -1,6 +1,7 @@
 import React from "react";
 // import { useDispatch } from "react-redux";
 import AddNewProduct from "../component/AddNewProduct";
+import AllReceivedOrders from "../component/AllReceivedOrders";
 
 const AdminPage = () => {
   //   const dispatch = useDispatch();
@@ -8,14 +9,12 @@ const AdminPage = () => {
   return (
     <div className="w-full bg-gray-100 py-4">
       <h1 className="text-2xl font-bold text-center mb-6">
-        Admin Panel - Add Product
+        Admin Panel
       </h1>
+      <div className="space-y-2">
       <AddNewProduct />
-      <div className="w-full md:h-96 border mx-auto my-10">
-        <p className="text-[20px] font-bold text-center text-red-900">
-          {" "}
-          All Orders
-        </p>
+      <AllReceivedOrders/>
+      <div className="h-[200px]"></div>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import shop from "../Images/shop.png";
 import Products from "../component/Products";
 import { useDispatch, useSelector } from "react-redux";
 import SearchBar from "../component/SearchBar";
+import FeaturedDetails from "../component/FeaturedDetails";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const Home = () => {
   }, [dispatch]);
 
   const isLoggedIn = useSelector((state) => state.userSlice.isLoggedIn);
+  const loading = useSelector((state) => state.userSlice.loading);
   return (
     <>
       <div className="bg-gray-100">
@@ -21,7 +23,7 @@ const Home = () => {
         <div className="md:hidden fixed bg-gray-100  w-full z-[1] flex justify-center items-center py-3">
           <SearchBar />
         </div>
-        {!isLoggedIn && (
+        {!isLoggedIn && !loading && (
           <section className="relative bg-gradient-to-r from-slate-400 to-slate-600 text-white py-20">
             <div className="max-w-7xl mx-auto px-4  flex flex-col md:flex-row items-center justify-between">
               <div className="w-full md:w-1/2 flex justify-center items-center mb-8 md:mb-0">
@@ -50,8 +52,20 @@ const Home = () => {
           </section>
         )}
 
+        <FeaturedDetails/>
+
         {/* Featured Products */}
+        <div className="min-h-[400px]">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center bg-gray-50 py-6 tracking-tight ">
+         Featured Products
+       </h2>
+        {loading ? <div className="w-full h-[400px] bg-gray-50 flex justify-center items-center flex-col gap-[8px]">
+        <div className="w-8 h-8 border border-t-[2px] border-gray-800 border-solid rounded-full animate-spin"></div>
+         <p className="text-gray-500">Loading Products....</p>
+        </div> :
         <Products />
+           }
+           </div>
       </div>
     </>
   );

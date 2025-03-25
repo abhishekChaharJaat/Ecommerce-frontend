@@ -19,6 +19,8 @@ import {
   FaPlus,
   FaTimes,
 } from "react-icons/fa";
+import Input from "./Input";
+import Button from "./Button";
 
 const AddNewProduct = () => {
   const dispatch = useDispatch();
@@ -111,8 +113,8 @@ const AddNewProduct = () => {
       {/* Toggle Button */}
       <button
         onClick={() => setIsFormOpen(!isFormOpen)}
-        className={`w-full py-4 px-6 font-medium bg-slate-700 text-white md:rounded-t-[8px] transition-colors duration-200 flex items-center justify-between gap-2 cursor-pointer ${
-          isFormOpen ? "" : "md:rounded-b-[8px]"
+        className={`w-full py-4 px-6 font-medium bg-slate-600 hover:bg-slate-700 text-white md:rounded-t-[4px] transition-colors duration-200 flex items-center justify-between gap-2 cursor-pointer ${
+          isFormOpen ? "" : "md:rounded-b-[4px]"
         }`}
       >
         {isFormOpen ? "Close Form" : "Add New Product"}
@@ -125,287 +127,247 @@ const AddNewProduct = () => {
         }`}
       >
         <form
-          onSubmit={handleSubmit}
           className="grid grid-cols-1 sm:grid-cols-2 gap-4"
         >
           {/* Basic Info */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaIdBadge className="text-blue-500" /> Product ID
-            </label>
-            <input
+            <Input
+              label="Product ID"
+              icon={<FaIdBadge className="!text-gray-500" />}
               type="text"
               name="id"
+              placeholder="prod_12345"
               value={product.id}
               onChange={handleChange}
-              placeholder="e.g., prod_12345"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
+            /> 
           </div>
+
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaTag className="text-blue-500" /> Name
-            </label>
-            <input
+          <Input
+              label="Name"
+              icon={<FaTag className="!text-gray-500" />}
               type="text"
               name="name"
               value={product.name}
               onChange={handleChange}
               placeholder="Product Name"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Description (Single Row) */}
           <div className="sm:col-span-2 relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaAlignLeft className="text-blue-500" /> Description
-            </label>
+          <label className="flex text-gray-700 font-semibold mb-2">
+            Description
+          </label>
             <textarea
               name="description"
               value={product.description}
               onChange={handleChange}
               placeholder="Description"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
+              rows="3"
+              className="rounded-md relative block w-full p-2  border border-gray-300 placeholder-gray-500 text-gray-900  focus:border-blue-500 sm:text-sm shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Brand and Category */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaStore className="text-blue-500" /> Brand
-            </label>
-            <input
+              <Input
+              label="Brand"
+              icon={<FaStore className="!text-gray-500" />}
               type="text"
               name="brand"
               value={product.brand}
               onChange={handleChange}
-              placeholder="e.g., Sony"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. Sony.."
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaLayerGroup className="text-blue-500" /> Category
-            </label>
-            <input
+             <Input
+              label="Category"
+              icon={<FaLayerGroup className="!text-gray-500" />}
               type="text"
               name="category"
               value={product.category}
               onChange={handleChange}
-              placeholder="e.g., Electronics"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. Electronics"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Subcategory and Size */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaShapes className="text-blue-500" /> Subcategory
-            </label>
-            <input
+            <Input
+              label="Subcategory"
+              icon={<FaShapes className="!text-gray-500" />}
               type="text"
               name="subCategory"
               value={product.subCategory}
               onChange={handleChange}
-              placeholder="e.g., Audio Accessories"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. Audio Accessories"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Pricing */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaDollarSign className="text-blue-500" /> Price
-            </label>
-            <input
+            <Input
+              label="Price"
+              icon={<FaDollarSign className="!text-gray-500" />}
               type="number"
               name="price"
               value={product.price}
               onChange={handleChange}
-              placeholder="e.g., 299.99"
-              min="0"
-              step="0.01"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+              placeholder="e.g. 299.99"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
+            /> 
           </div>
+
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaDollarSign className="text-blue-500" /> Original Price
-            </label>
-            <input
+            <Input
+              label="Original Price"
+              icon={<FaDollarSign className="!text-gray-500" />}
               type="number"
               name="originalPrice"
               value={product.originalPrice}
               onChange={handleChange}
-              placeholder="e.g., 349.99"
-              min="0"
-              step="0.01"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. 349.99"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Discount and Currency */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaPercentage className="text-blue-500" /> Discount
-            </label>
-            <input
+             <Input
+              label="Discount"
+              icon={<FaPercentage className="!text-gray-500" />}
               type="text"
               name="discount"
               value={product.discount}
               onChange={handleChange}
-              placeholder="e.g., 15%"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. 15%"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
+
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaDollarSign className="text-blue-500" /> Currency
-            </label>
-            <input
+             <Input
+              label="Currency"
+              icon={<FaDollarSign className="!text-gray-500" />}
               type="text"
               name="currency"
               value={product.currency}
               onChange={handleChange}
-              placeholder="e.g., USD"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. Rs"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Stock */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaRuler className="text-blue-500" /> Stock
-            </label>
-            <input
+             <Input
+              label="Stock"
+              icon={<FaRuler className="!text-gray-500" />}
               type="number"
               name="stock"
               value={product.stock}
               onChange={handleChange}
-              placeholder="e.g., 25"
-              min="0"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. 25"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Images */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaImage className="text-blue-500" /> Images
-            </label>
-            <input
+               <Input
+              label="Images"
+              icon={<FaImage className="!text-gray-500" />}
               type="text"
               name="images"
               value={product.images}
               onChange={handleChange}
-              placeholder="e.g., url1, url2"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. url1, url2"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
+
           </div>
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaImage className="text-blue-500" /> Thumbnail
-            </label>
-            <input
+              <Input
+              label="Thumbnail"
+              icon={<FaImage className="!text-gray-500" />}
               type="file"
               name="thumbnail"
               onChange={handleChange}
               placeholder="Thumbnail URL"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Ratings and Reviews */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaStar className="text-blue-500" /> Ratings
-            </label>
-            <input
+              <Input
+              label="Ratings"
+              icon={<FaStar className="!text-gray-500" />}
               type="number"
               name="ratings"
               value={product.ratings}
               onChange={handleChange}
               placeholder="0-5"
-              min="0"
-              max="5"
-              step="0.1"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaUsers className="text-blue-500" /> Reviews Count
-            </label>
-            <input
+               <Input
+              label="Reviews Count"
+              icon={<FaUsers className="!text-gray-500" />}
               type="number"
               name="reviewsCount"
               value={product.reviewsCount}
               onChange={handleChange}
-              placeholder="e.g., 0"
-              min="0"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. 0"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Seller and Featured */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaStore className="text-blue-500" /> Seller
-            </label>
-            <input
+               <Input
+              label="Seller"
+              icon={<FaStore className="!text-gray-500" />}
               type="text"
               name="seller"
               value={product.seller}
               onChange={handleChange}
-              placeholder="e.g., TechTrendz"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. TechTrendz"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Policies */}
           <div className="relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaUndo className="text-blue-500" /> Return Policy
-            </label>
-            <input
+               <Input
+              label="Return Policy"
+              icon={<FaUndo className="!text-gray-500" />}
               type="text"
               name="returnPolicy"
               value={product.returnPolicy}
               onChange={handleChange}
               placeholder="e.g., 30-day return"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
           <div className="sm:col-span-2 relative">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <FaShieldAlt className="text-blue-500" /> Warranty
-            </label>
-            <input
-              type="text"
+               <Input
+              label="Warranty"
+              icon={<FaShieldAlt className="!text-gray-500" />}
+             type="text"
               name="warranty"
               value={product.warranty}
               onChange={handleChange}
               placeholder="e.g., 1-year limited"
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -435,19 +397,17 @@ const AddNewProduct = () => {
 
           {/* Submit Button (Single Row) */}
           <div className="flex gap-[12px] py-2 sm:col-span-2 justify-end">
-            <button
-              type="button"
-              className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md ring-1 transition-colors font-medium duration-200 flex items-center justify-center gap-2"
-              onClick={() => setIsFormOpen(!isFormOpen)}
-            >
-              Cancle
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center gap-2"
-            >
-              <FaPlus /> Add Product
-            </button>
+          <Button
+                type="button"
+                className="!bg-transparent !text-black hover:!ring-2 ring-offset-1 ring-slat-400"
+                title="Cancle"
+                onClick={() => setIsFormOpen(!isFormOpen)}
+              />
+            <Button
+                type="submit"
+                title="Upload Product"
+                onClick={handleSubmit}
+              />
           </div>
         </form>
       </div>

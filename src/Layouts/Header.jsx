@@ -76,12 +76,12 @@ const Header = () => {
                   </Link>
                 )}
 
-                <button className="relative text-gray-600 hover:text-blue-600 mr-2 cursor-pointer">
+                <Link to='/cart' className="relative text-gray-600 hover:text-blue-600 mr-2 cursor-pointer">
                   <FaShoppingCart className="text-xl" />
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                     3
                   </span>
-                </button>
+                </Link>
                 <div className="hidden md:flex gap-[8px] justify-center items-center">
                   <img
                     src={user?.profilePicture ? user?.profilePicture : profile }

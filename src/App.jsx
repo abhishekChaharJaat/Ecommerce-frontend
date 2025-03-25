@@ -7,6 +7,7 @@ import BaseLayout from "./Layouts/BaseLayout.jsx";
 import EditUserInfoPopup from "./component/EditUserInfoPopup.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
+import Cart from "./pages/Cart.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
         <EditUserInfoPopup />

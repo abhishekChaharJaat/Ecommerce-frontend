@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { setOpenLoginPopup } from "../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { setShowSelectProduct, setSelectedProduct } from "../store/productSlice";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -29,12 +30,14 @@ const Products = () => {
   //   },
   // ];
 
+  const handleProductClicked = (data) => {
+      dispatch(setSelectedProduct(data))
+      dispatch(setShowSelectProduct(true));
+  }
+
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-4 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-6 md:mb-12 tracking-tight">
-          Featured Products
-        </h2>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
           {featuredProducts?.map((product) => (
             <div
@@ -44,6 +47,7 @@ const Products = () => {
               {/* Product Image */}
               <div className="relative">
                 <img
+                 onClick={() => handleProductClicked(product)}
                   src={product?.thumbnail}
                   alt="svb"
                   className="w-full h-28 sm:h-48 object-cover cursor-pointer"
@@ -100,7 +104,7 @@ const Products = () => {
                   }
                   onClick={() => {
                     isLoggedIn
-                      ? alert("Go to cart")
+                      ? alert("Your item is added to cart")
                       : dispatch(setOpenLoginPopup(true));
                   }}
                   className="w-full py-[6px] md:py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-200 text-[12px] sm:text-base"
