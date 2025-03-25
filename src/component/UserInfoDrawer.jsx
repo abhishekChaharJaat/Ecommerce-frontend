@@ -77,10 +77,10 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
             )}
 
             <div>
-              <h3 className="text-[16px] font-bold text-gray-900 ">
+              <h3 className="text-[18px] font-bold text-gray-900 ">
                 {user?.name || "Guest User"}
               </h3>
-              <p className="text-[10px] text-gray-600 italic">
+              <p className="text-[12px] text-gray-600 italic">
                 {user?.email || "Not logged in"}
               </p>
             </div>
@@ -95,11 +95,11 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
 
         {/* Scrollable content container */}
 
-        <div className="p-5 h-[calc(100%-64px)] overflow-y-auto scrollbar-hide">
-          <div className="md:hidden flex flex-col space-y-4 border-b-[1px] border-slate-300 pb-8">
+        <div className="p-5 h-[calc(100%-64px)] overflow-y-auto scrollbar-hide flex flex-col gap-y-6">
+        <div className=" flex flex-col space-y-4  bg-gray-50 p-4 rounded-lg">
             <Link
               to="/"
-              className="text-[#18475A] font-[700] text-xl hover:text-blue-600 transition-colors"
+              className="text-[#18475A] font-[700] hover:text-blue-600 transition-colors"
               onClick={() => {
                 dispatch(setOpenUserInfoDrawer(false));
               }}
@@ -108,7 +108,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
             </Link>
             <Link
               to="/about"
-              className="text-[#18475A] font-[700] text-xl hover:text-blue-600 transition-colors"
+              className="text-[#18475A] font-[700] hover:text-blue-600 transition-colors"
               onClick={() => {
                 dispatch(setOpenUserInfoDrawer(false));
               }}
@@ -117,7 +117,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
             </Link>
             <Link
               to="/categories"
-              className="text-[#18475A] font-[700] text-xl hover:text-blue-600 transition-colors"
+              className="text-[#18475A] font-[700] hover:text-blue-600 transition-colors"
               onClick={() => {
                 dispatch(setOpenUserInfoDrawer(false));
               }}
@@ -126,57 +126,60 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
             </Link>
           </div>
 
-         
-            <div className="space-y-4 mb-6 bg-gray-50 p-4 rounded-lg">
-              <p className="text-[18px] md:text-[20px] font-[600] italic">Personal Info</p>
-              <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700 flex items-center gap-2">
-                  <FaUser ne className="text-indigo-500" /> Name
-                </span>
-                <span className="text-gray-600">
-                  {user?.name || "Not provided"}
-                </span>
-              </div>
-              <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700 flex items-center gap-2">
-                  <FaEnvelope className="text-indigo-500" /> Email
-                </span>
-                <span className="text-gray-600">
-                  {user?.email || "Not provided"}
-                </span>
-              </div>
-              <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700 flex items-center gap-2">
-                  <FaPhone className="text-indigo-500" /> Phone
-                </span>
-                <span className="text-gray-600">
-                  +91 {user?.phone || "Not provided"}
-                </span>
-              </div>
-              <div className="flex items-center justify-between py-2 border-b border-gray-100 gap-6">
-                <span className="font-medium text-gray-700 flex items-center gap-2">
-                  <FaMapMarkerAlt className="text-indigo-500" /> Address
-                </span>
-                <span className="text-end text-gray-600">
-                  {user?.address || "Not provided"}
-                </span>
-              </div>
-              <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700 flex items-center gap-2">
-                  <PiMapPinSimpleAreaBold className="text-indigo-500" /> Pin
-                  code{" "}
-                </span>
-                <span className="text-gray-600">{user?.pincode || 0}</span>
-              </div>
-              <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700 flex items-center gap-2">
-                  <FaVenus className="text-indigo-500" /> Gender{" "}
-                </span>
-                <span className="text-gray-600">{user?.gender || 0}</span>
-              </div>
-            </div>
-      
+   <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
+  <p className="text-[18px] md:text-[20px] font-[600] italic">Personal Info</p>
+  <div className="flex items-center justify-between py-2 border-b border-gray-100">
+    <span className="font-medium text-gray-700 flex items-center gap-2">
+      <FaUser className="text-indigo-500" /> Name
+    </span>
+    <span className="text-gray-600 text-sm md:text-base"> {/* Adjusted text size for mobile vs desktop */}
+      {user?.name || "Not provided"}
+    </span>
+  </div>
+  <div className="flex items-center justify-between py-2 border-b border-gray-100">
+    <span className="font-medium text-gray-700 flex items-center gap-2">
+      <FaEnvelope className="text-indigo-500" /> Email
+    </span>
+    <span className="text-gray-600 text-sm md:text-base">
+      {user?.email || "Not provided"}
+    </span>
+  </div>
+  <div className="flex items-center justify-between py-2 border-b border-gray-100">
+    <span className="font-medium text-gray-700 flex items-center gap-2">
+      <FaPhone className="text-indigo-500" /> Phone
+    </span>
+    <span className="text-gray-600 text-sm md:text-base">
+      +91 {user?.phone || "Not provided"}
+    </span>
+  </div>
+  <div className="flex items-center justify-between py-2 border-b border-gray-100 gap-6">
+    <span className="font-medium text-gray-700 flex items-center gap-2">
+      <FaMapMarkerAlt className="text-indigo-500" /> Address
+    </span>
+    <span className="text-end text-gray-600 text-sm md:text-base">
+      {user?.address || "Not provided"}
+    </span>
+  </div>
+  <div className="flex items-center justify-between py-2 border-b border-gray-100">
+    <span className="font-medium text-gray-700 flex items-center gap-2">
+      <PiMapPinSimpleAreaBold className="text-indigo-500" /> Pin
+      code{" "}
+    </span>
+    <span className="text-gray-600 text-sm md:text-base">
+      {user?.pincode || 0}
+    </span>
+  </div>
+  <div className="flex items-center justify-between py-2 border-b border-gray-100">
+    <span className="font-medium text-gray-700 flex items-center gap-2">
+      <FaVenus className="text-indigo-500" /> Gender{" "}
+    </span>
+    <span className="text-gray-600 text-sm md:text-base">
+      {user?.gender || 0}
+    </span>
+  </div>
+</div>
 
+      
           {isLoggedIn ? (
             <div className="space-y-3 pb-5">
               <button
