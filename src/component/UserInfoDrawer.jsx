@@ -98,7 +98,7 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
         {/* Scrollable content container */}
 
         <div className="p-5 h-[calc(100%-64px)] overflow-y-auto scrollbar-hide flex flex-col gap-y-6">
-          <div className=" flex flex-col space-y-4  bg-gray-50 p-4 rounded-lg">
+          <div className="md:hidden flex flex-col space-y-4  bg-gray-50 p-4 rounded-lg">
             <Link
               to="/"
               className="text-[#18475A] font-[700] hover:text-blue-600 transition-colors"

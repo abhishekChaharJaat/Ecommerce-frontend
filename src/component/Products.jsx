@@ -9,7 +9,10 @@ import {
 } from "react-icons/fa";
 import { setOpenLoginPopup } from "../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { setShowSelectProduct, setSelectedProduct } from "../store/productSlice";
+import {
+  setShowSelectProduct,
+  setSelectedProduct,
+} from "../store/productSlice";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -31,9 +34,9 @@ const Products = () => {
   // ];
 
   const handleProductClicked = (data) => {
-      dispatch(setSelectedProduct(data))
-      dispatch(setShowSelectProduct(true));
-  }
+    dispatch(setSelectedProduct(data));
+    dispatch(setShowSelectProduct(true));
+  };
 
   return (
     <section className="py-4 bg-gray-50">
@@ -47,7 +50,7 @@ const Products = () => {
               {/* Product Image */}
               <div className="relative">
                 <img
-                 onClick={() => handleProductClicked(product)}
+                  onClick={() => handleProductClicked(product)}
                   src={product?.thumbnail}
                   alt="svb"
                   className="w-full h-28 sm:h-48 object-cover cursor-pointer"
@@ -65,7 +68,10 @@ const Products = () => {
                   {product?.isInStock ? (
                     <FaCheckCircle className="text-green-500 text-lg" />
                   ) : (
-                    <FaTimesCircle className="text-red-500 text-lg" />
+                    // <FaTimesCircle className="text-red-500 text-lg" />
+                    <p className="text-red-500 text-xs font-medium">
+                      Out of stock
+                    </p>
                   )}
                 </span>
               </div>

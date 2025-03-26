@@ -21,6 +21,7 @@ import {
 } from "react-icons/fa";
 import Input from "./Input";
 import Button from "./Button";
+import { toast } from "react-toastify";
 
 const AddNewProduct = () => {
   const dispatch = useDispatch();
@@ -76,32 +77,48 @@ const AddNewProduct = () => {
 
   // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(addNewProduct(product));
-    setProduct({
-      id: "",
-      name: "",
-      description: "",
-      category: "",
-      subCategory: "",
-      size: "",
-      price: "",
-      originalPrice: "",
-      discount: "",
-      currency: "USD",
-      stock: "",
-      isInStock: true,
-      brand: "",
-      images: "",
-      thumbnail: "",
-      ratings: "0",
-      reviewsCount: "0",
-      isFeatured: false,
-      seller: "",
-      returnPolicy: "",
-      warranty: "",
-    });
-    setIsFormOpen(false); // Close form after submission
+    if (
+      !product?.name ||
+      !product?.description ||
+      !product?.category ||
+      !product?.subCategory ||
+      !product?.price ||
+      !product?.currency ||
+      !product?.stock ||
+      !product?.isInStock ||
+      !product?.brand ||
+      !product?.seller ||
+      !product?.returnPolicy
+    ) {
+      toast.error("Enter necessary details");
+    } else {
+      e.preventDefault();
+      dispatch(addNewProduct(product));
+      setProduct({
+        id: "",
+        name: "",
+        description: "",
+        category: "",
+        subCategory: "",
+        size: "",
+        price: "",
+        originalPrice: "",
+        discount: "",
+        currency: "USD",
+        stock: "",
+        isInStock: true,
+        brand: "",
+        images: "",
+        thumbnail: "",
+        ratings: "0",
+        reviewsCount: "0",
+        isFeatured: false,
+        seller: "",
+        returnPolicy: "",
+        warranty: "",
+      });
+      setIsFormOpen(false);
+    }
   };
 
   return (
@@ -126,9 +143,7 @@ const AddNewProduct = () => {
           isFormOpen ? "max-h-[2000px] opacity-100 py-6" : "max-h-0 opacity-0 "
         }`}
       >
-        <form
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-        >
+        <form className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Basic Info */}
           <div className="relative">
             <Input
@@ -140,11 +155,11 @@ const AddNewProduct = () => {
               value={product.id}
               onChange={handleChange}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
-            /> 
+            />
           </div>
 
           <div className="relative">
-          <Input
+            <Input
               label="Name"
               icon={<FaTag className="!text-gray-500" />}
               type="text"
@@ -152,28 +167,30 @@ const AddNewProduct = () => {
               value={product.name}
               onChange={handleChange}
               placeholder="Product Name"
+              required={true}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Description (Single Row) */}
           <div className="sm:col-span-2 relative">
-          <label className="flex text-gray-700 font-semibold mb-2">
-            Description
-          </label>
+            <label className="flex text-gray-700 font-semibold mb-2">
+              Description
+            </label>
             <textarea
               name="description"
               value={product.description}
               onChange={handleChange}
               placeholder="Description"
               rows="3"
+              required={true}
               className="rounded-md relative block w-full p-2  border border-gray-300 placeholder-gray-500 text-gray-900  focus:border-blue-500 sm:text-sm shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Brand and Category */}
           <div className="relative">
-              <Input
+            <Input
               label="Brand"
               icon={<FaStore className="!text-gray-500" />}
               type="text"
@@ -181,11 +198,12 @@ const AddNewProduct = () => {
               value={product.brand}
               onChange={handleChange}
               placeholder="e.g. Sony.."
+              required={true}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
           <div className="relative">
-             <Input
+            <Input
               label="Category"
               icon={<FaLayerGroup className="!text-gray-500" />}
               type="text"
@@ -193,6 +211,7 @@ const AddNewProduct = () => {
               value={product.category}
               onChange={handleChange}
               placeholder="e.g. Electronics"
+              required={true}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
@@ -207,6 +226,7 @@ const AddNewProduct = () => {
               value={product.subCategory}
               onChange={handleChange}
               placeholder="e.g. Audio Accessories"
+              required={true}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
@@ -221,8 +241,9 @@ const AddNewProduct = () => {
               value={product.price}
               onChange={handleChange}
               placeholder="e.g. 299.99"
+              required={true}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
-            /> 
+            />
           </div>
 
           <div className="relative">
@@ -240,7 +261,7 @@ const AddNewProduct = () => {
 
           {/* Discount and Currency */}
           <div className="relative">
-             <Input
+            <Input
               label="Discount"
               icon={<FaPercentage className="!text-gray-500" />}
               type="text"
@@ -253,7 +274,7 @@ const AddNewProduct = () => {
           </div>
 
           <div className="relative">
-             <Input
+            <Input
               label="Currency"
               icon={<FaDollarSign className="!text-gray-500" />}
               type="text"
@@ -267,7 +288,7 @@ const AddNewProduct = () => {
 
           {/* Stock */}
           <div className="relative">
-             <Input
+            <Input
               label="Stock"
               icon={<FaRuler className="!text-gray-500" />}
               type="number"
@@ -275,13 +296,14 @@ const AddNewProduct = () => {
               value={product.stock}
               onChange={handleChange}
               placeholder="e.g. 25"
+              required={true}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Images */}
           <div className="relative">
-               <Input
+            <Input
               label="Images"
               icon={<FaImage className="!text-gray-500" />}
               type="text"
@@ -291,10 +313,9 @@ const AddNewProduct = () => {
               placeholder="e.g. url1, url2"
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
-
           </div>
           <div className="relative">
-              <Input
+            <Input
               label="Thumbnail"
               icon={<FaImage className="!text-gray-500" />}
               type="file"
@@ -307,7 +328,7 @@ const AddNewProduct = () => {
 
           {/* Ratings and Reviews */}
           <div className="relative">
-              <Input
+            <Input
               label="Ratings"
               icon={<FaStar className="!text-gray-500" />}
               type="number"
@@ -319,7 +340,7 @@ const AddNewProduct = () => {
             />
           </div>
           <div className="relative">
-               <Input
+            <Input
               label="Reviews Count"
               icon={<FaUsers className="!text-gray-500" />}
               type="number"
@@ -333,7 +354,7 @@ const AddNewProduct = () => {
 
           {/* Seller and Featured */}
           <div className="relative">
-               <Input
+            <Input
               label="Seller"
               icon={<FaStore className="!text-gray-500" />}
               type="text"
@@ -341,13 +362,14 @@ const AddNewProduct = () => {
               value={product.seller}
               onChange={handleChange}
               placeholder="e.g. TechTrendz"
+              required={true}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
 
           {/* Policies */}
           <div className="relative">
-               <Input
+            <Input
               label="Return Policy"
               icon={<FaUndo className="!text-gray-500" />}
               type="text"
@@ -355,14 +377,15 @@ const AddNewProduct = () => {
               value={product.returnPolicy}
               onChange={handleChange}
               placeholder="e.g., 30-day return"
+              required={true}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
           <div className="sm:col-span-2 relative">
-               <Input
+            <Input
               label="Warranty"
               icon={<FaShieldAlt className="!text-gray-500" />}
-             type="text"
+              type="text"
               name="warranty"
               value={product.warranty}
               onChange={handleChange}
@@ -397,17 +420,17 @@ const AddNewProduct = () => {
 
           {/* Submit Button (Single Row) */}
           <div className="flex gap-[12px] py-2 sm:col-span-2 justify-end">
-          <Button
-                type="button"
-                className="!bg-transparent !text-black hover:!ring-2 ring-offset-1 ring-slat-400"
-                title="Cancle"
-                onClick={() => setIsFormOpen(!isFormOpen)}
-              />
             <Button
-                type="submit"
-                title="Upload Product"
-                onClick={handleSubmit}
-              />
+              type="button"
+              className="!bg-transparent !text-black hover:!ring-2 ring-offset-1 ring-slat-400"
+              title="Cancle"
+              onClick={() => setIsFormOpen(!isFormOpen)}
+            />
+            <Button
+              type="submit"
+              title="Upload Product"
+              onClick={handleSubmit}
+            />
           </div>
         </form>
       </div>
