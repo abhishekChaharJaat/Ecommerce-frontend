@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
-import { FaStar, FaStarHalfAlt, FaRegStar, FaShoppingCart, FaTruck, FaUndo } from 'react-icons/fa';
-import Modal from './Modal';
-import { useSelector, useDispatch } from 'react-redux';
-import { setShowSelectProduct } from '../store/productSlice';
-
+import React, { useState } from "react";
+import {
+  FaStar,
+  FaStarHalfAlt,
+  FaRegStar,
+  FaShoppingCart,
+  FaTruck,
+  FaUndo,
+} from "react-icons/fa";
+import Modal from "./Modal";
+import { useSelector, useDispatch } from "react-redux";
+import { setShowSelectProduct, addToCart } from "../store/productSlice";
+import { setOpenLoginPopup } from "../store/userSlice";
 const ProductDetails = () => {
   const dispatch = useDispatch();
-  const isShowSelectedProduct = useSelector(state => state.productSlice.isShowSelectedProduct);
-  const product = useSelector(state => state.productSlice.selectedProduct);
+  const isShowSelectedProduct = useSelector(
+    (state) => state.productSlice.isShowSelectedProduct
+  );
+  const product = useSelector((state) => state.productSlice.selectedProduct);
+  const isLoggedIn = useSelector((state) => state.userSlice.isLoggedIn);
 
-  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedSize, setSelectedSize] = useState("");
+  const [qty, setQty] = useState(1);
+  const [color, setColor] = useState(1);
 
   // Function to render star ratings
   const renderStars = (rating) => {
@@ -29,17 +41,29 @@ const ProductDetails = () => {
     return stars;
   };
 
+  const handleAddToCart = (productId, color, qty, size) => {
+    const data = { productId, color, qty, size };
+    if (isLoggedIn) {
+      dispatch(addToCart(data));
+    } else {
+      dispatch(setOpenLoginPopup(true));
+    }
+  };
+
   // Function to render the size selection with clickable boxes
   const renderSizeSelection = () => {
-    if (product.category === 'Clothing' || product.category === 'Footwear') {
+    if (product.category === "Clothing" || product.category === "Footwear") {
       const sizes =
-        product.category === 'Clothing'
-          ? ['S', 'M', 'L', 'XL', 'XXL']
-          : ['6', '7', '8', '9', '10', '11']; // Footwear sizes
+        product.category === "Clothing"
+          ? ["S", "M", "L", "XL", "XXL"]
+          : ["6", "7", "8", "9", "10", "11"]; // Footwear sizes
 
       return (
         <div className="mb-4">
-          <label htmlFor="size" className="block text-gray-700 font-medium mb-2">
+          <label
+            htmlFor="size"
+            className="block text-gray-700 font-medium mb-2"
+          >
             Select Size:
           </label>
           <div className="flex gap-3 flex-wrap">
@@ -49,8 +73,8 @@ const ProductDetails = () => {
                 onClick={() => setSelectedSize(size)}
                 className={`px-4 py-2 border cursor-pointer text-[10px] rounded-md text-gray-700 font-medium ${
                   selectedSize === size
-                    ? 'bg-black text-white'
-                    : 'bg-white border-gray-300 hover:bg-gray-100'
+                    ? "bg-black text-white"
+                    : "bg-white border-gray-300 hover:bg-gray-100"
                 }`}
               >
                 {size}
@@ -83,13 +107,19 @@ const ProductDetails = () => {
 
           {/* Product Details */}
           <div className="md:w-1/2">
-            <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">{product.name}</h1>
-            <p className="text-gray-600 text-[14px] mb-2">{product.description}</p>
+            <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
+              {product.name}
+            </h1>
+            <p className="text-gray-600 text-[14px] mb-2">
+              {product.description}
+            </p>
 
             {/* Rating */}
             <div className="flex items-center mb-2">
               <div className="flex">{renderStars(product.ratings)}</div>
-              <span className="ml-2 text-gray-500">({product.reviewsCount} reviews)</span>
+              <span className="ml-2 text-gray-500">
+                ({product.reviewsCount} reviews)
+              </span>
             </div>
 
             {/* Price */}
@@ -100,13 +130,17 @@ const ProductDetails = () => {
               <span className="text-lg text-gray-500 line-through">
                 {product.currency} {product.originalPrice}
               </span>
-              <span className="text-sm text-red-500 font-medium">{product.discount} OFF</span>
+              <span className="text-sm text-red-500 font-medium">
+                {product.discount} OFF
+              </span>
             </div>
 
             {/* Stock */}
             <p className="text-gray-700 mb-2">
               {product.isInStock ? (
-                <span className="text-green-500">In Stock ({product.stock} left)</span>
+                <span className="text-green-500">
+                  In Stock ({product.stock} left)
+                </span>
               ) : (
                 <span className="text-red-500">Out of Stock</span>
               )}
@@ -131,7 +165,9 @@ const ProductDetails = () => {
                 <span className="text-gray-700">{product.returnPolicy}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-gray-700">Warranty: {product.warranty}</span>
+                <span className="text-gray-700">
+                  Warranty: {product.warranty}
+                </span>
               </div>
             </div>
 
@@ -140,7 +176,10 @@ const ProductDetails = () => {
 
             {/* Add to Cart Button */}
             <button
-              onClick={() => alert("Your item is added to cart")}
+              onClick={() => {
+                handleAddToCart(product._id, color, qty, selectedSize);
+                dispatch(setShowSelectProduct(false));
+              }}
               className="flex items-center gap-2 bg-slate-600 text-white py-2 px-6 rounded-lg hover:bg-slate-700 transition-colors cursor-pointer"
             >
               <FaShoppingCart />

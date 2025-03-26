@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import { FaShoppingCart, FaTimes, FaBars, FaUserShield, FaUserCircle } from "react-icons/fa";
+import {
+  FaShoppingCart,
+  FaTimes,
+  FaBars,
+  FaUserShield,
+  FaUserCircle,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
-import profile from '../Images/profile.webp'
+import profile from "../Images/profile.webp";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setOpenLoginPopup,
@@ -14,7 +20,7 @@ import SearchBar from "../component/SearchBar";
 const Header = () => {
   const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  
+
   const isLoggedIn = useSelector((state) => state.userSlice.isLoggedIn);
   const user = useSelector((state) => state.userSlice.user);
   const loading = useSelector((state) => state.userSlice.loading);
@@ -64,7 +70,7 @@ const Header = () => {
           <div className="flex items-center gap-x-6">
             {isLoggedIn || loading ? (
               <>
-                {user?.role === 1  && (
+                {user?.role === 1 && (
                   <Link
                     to="/admin"
                     className="relative hover:text-blue-600 mr-2"
@@ -76,7 +82,10 @@ const Header = () => {
                   </Link>
                 )}
 
-                <Link to='/cart' className="relative text-gray-600 hover:text-blue-600 mr-2 cursor-pointer">
+                <Link
+                  to="/cart"
+                  className="relative text-gray-600 hover:text-blue-600 mr-2 cursor-pointer"
+                >
                   <FaShoppingCart className="text-xl" />
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                     3
@@ -84,11 +93,11 @@ const Header = () => {
                 </Link>
                 <div className="hidden md:flex gap-[8px] justify-center items-center">
                   <img
-                    src={user?.profilePicture ? user?.profilePicture : profile }
+                    src={user?.profilePicture ? user?.profilePicture : profile}
                     alt="User profile"
                     className="ml-6 w-12 h-12 border rounded-full object-cover ring-2 ring-indigo-400 hover:ring-offset-1 hover:ring-slat-400 cursor-pointer"
                     onClick={() => dispatch(setOpenUserInfoDrawer(true))}
-                  /> 
+                  />
                 </div>
               </>
             ) : (

@@ -4,6 +4,7 @@ import { fetchUserInfo } from "../store/userSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { resetErrorSucces } from "../store/userSlice";
+import { resetProductErrorSuccess } from "../store/productSlice";
 
 const Constants = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const Constants = () => {
       toast.success(userSuccessMessage);
     }
     dispatch(resetErrorSucces());
-    navigate("/");
+    // navigate("/");
     window.scrollTo(0, 0);
   }, [userSuccessMessage]);
 
@@ -47,10 +48,16 @@ const Constants = () => {
   useEffect(() => {
     if (productSuccessMessage) {
       toast.success(productSuccessMessage);
-    } else {
+    }
+    dispatch(resetProductErrorSuccess());
+  }, [productSuccessMessage]);
+
+  useEffect(() => {
+    if (productError) {
       toast.error(productError);
     }
-  }, [productError, productSuccessMessage]);
+    dispatch(resetProductErrorSuccess());
+  }, [productError]);
 
   return <></>;
 };

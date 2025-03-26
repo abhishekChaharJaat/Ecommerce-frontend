@@ -1,67 +1,100 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaTrash, FaRegCreditCard, FaChevronLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-const Cart = () => {
+import { getCartItems, deleteCartItem } from "../store/productSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-    const navigate = useNavigate()
-  // Dummy data for cart items
-  const cartItems = [
-    {
-      id: 1,
-      name: "Product 1",
-      image: "https://via.placeholder.com/100", // Placeholder image
-      price: 25.99,
-      quantity: 2,
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      image: "https://via.placeholder.com/100", // Placeholder image
-      price: 15.49,
-      quantity: 1,
-    },
-  ];
+const Cart = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [cartWithProducts, setCartWithProducts] = useState([]);
+
+  const cartItems = useSelector((state) => state.productSlice.cartItems);
+  const loading = useSelector((state) => state.productSlice.loading);
+
+  useEffect(() => {
+    dispatch(getCartItems());
+  }, [dispatch]);
 
   // Calculate total price
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-   
+  const totalPrice = cartItems.reduce(
+    (acc, item) => acc + item?.productInfo?.price * item.qty,
+    0
+  );
+
+  // Format the price with commas
+  const formatPrice = (price) => {
+    return `Rs. ${price.toLocaleString()}`;
+  };
+
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-50">
+    <div className="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
       {/* Cart Header */}
       <div className="flex items-center space-x-4 mb-6">
-        <button className="p-2 text-xl text-gray-700 hover:text-gray-900" onClick={() => navigate("/")}>
+        <button
+          className="p-2 text-xl text-gray-700 hover:text-gray-900"
+          onClick={() => navigate("/")}
+        >
           <FaChevronLeft />
         </button>
-        <h1 className="text-2xl font-semibold text-gray-900">Shopping Cart</h1>
+        <h1 className="text-3xl font-semibold text-gray-900">Shopping Cart</h1>
       </div>
 
       {/* Cart Items */}
-      <div className="space-y-6">
-        {cartItems.map((item) => (
-          <div key={item.id} className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
-            <img src={item.image} alt={item.name} className="w-24 h-24 object-cover rounded-lg" />
-            <div className="ml-4 flex-grow">
-              <h3 className="text-lg font-medium text-gray-900">{item.name}</h3>
-              <p className="text-gray-700">Price: Rs. {item.price}</p>
-              <p className="text-gray-700">Quantity: {item.quantity}</p>
+      {loading ? (
+        <div className="w-full h-[200px] bg-gray-50 flex justify-center items-center flex-col gap-[8px]">
+          <div className="w-8 h-8 border border-t-[2px] border-gray-800 border-solid rounded-full animate-spin"></div>
+          <p className="text-gray-500">Loading Products....</p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {cartItems?.map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center justify-between bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+            >
+              <img
+                src={item?.productInfo?.thumbnail}
+                alt={item?.productInfo?.name}
+                className="w-24 h-24 object-cover rounded-lg"
+              />
+              <div className="ml-4 flex-grow">
+                <h3 className="text-lg font-medium text-gray-900">
+                  {item?.productInfo?.name}
+                </h3>
+                <p className="text-green-800 text-xs md:text-sm">
+                  {item?.productInfo?.description}
+                </p>
+                <p className="text-gray-700 font-medium text-sm">
+                  Price: {formatPrice(item?.productInfo?.price || 0)}
+                </p>
+                <p className="text-gray-700 text-xs">Quantity: {item.qty}</p>
+              </div>
+              <button
+                onClick={() => dispatch(deleteCartItem(item.productInfo._id))}
+                className="text-red-600 hover:text-red-800 text-xl cursor-pointer transition-colors duration-300 ease-in-out"
+              >
+                <FaTrash />
+              </button>
             </div>
-            <button className="text-red-600 hover:text-red-800 text-xl">
-              <FaTrash />
-            </button>
-          </div>
-        ))}
-      </div>
-
+          ))}
+        </div>
+      )}
       {/* Cart Summary */}
-      <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
+      <div className="mt-6 bg-white p-6 rounded-lg shadow-lg">
         <div className="flex justify-between mb-4">
-          <span className="text-lg font-medium text-gray-900">Total:</span>
-          <span className="text-lg font-semibold text-gray-900">Rs. {totalPrice.toFixed(2)}</span>
+          <span className="text-xl font-medium text-gray-900">Total:</span>
+          <span className="text-xl font-semibold text-gray-900">
+            {formatPrice(totalPrice || 0)}
+          </span>
         </div>
         <div className="flex justify-end">
-          <button className="px-6 py-3 bg-slate-600 text-white font-medium text-lg rounded-lg hover:bg-slate-700 flex items-center space-x-2">
+          <button
+            onClick={() => alert("Under construction")}
+            className="px-6 py-3 bg-slate-600 text-white font-medium text-lg rounded-lg hover:bg-slate-700 flex items-center space-x-2 transition-all duration-300 ease-in-out cursor-pointer"
+          >
             <FaRegCreditCard />
-            <span>Proceed to Checkout</span>
+            <span>Place Order</span>
           </button>
         </div>
       </div>
@@ -70,4 +103,3 @@ const Cart = () => {
 };
 
 export default Cart;
-

@@ -1,23 +1,19 @@
 import React from "react";
 import Button from "./Button";
-import {
-  FaStar,
-  FaCheckCircle,
-  FaTimesCircle,
-  FaShoppingCart,
-  FaTag,
-} from "react-icons/fa";
+import { FaStar, FaCheckCircle, FaShoppingCart, FaTag } from "react-icons/fa";
 import { setOpenLoginPopup } from "../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setShowSelectProduct,
   setSelectedProduct,
+  addToCart,
 } from "../store/productSlice";
 
 const Products = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.userSlice.isLoggedIn);
   const featuredProducts = useSelector((state) => state.productSlice.products);
+
   // const products = [
   //   {
   //     id: 3,
@@ -38,13 +34,23 @@ const Products = () => {
     dispatch(setShowSelectProduct(true));
   };
 
+  const handleAddToCart = (productId, color, qty, size) => {
+    const data = { productId, color, qty, size };
+    if (isLoggedIn) {
+      dispatch(addToCart(data));
+      console.log(data);
+    } else {
+      dispatch(setOpenLoginPopup(true));
+    }
+  };
+
   return (
     <section className="py-4 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
-          {featuredProducts?.map((product) => (
+          {featuredProducts?.map((product, idx) => (
             <div
-              key={product?.id}
+              key={idx}
               className="bg-white rounded-xl shadow-lg overflow-hidden transform  hover:shadow-2xl transition-all duration-300"
             >
               {/* Product Image */}
@@ -109,9 +115,7 @@ const Products = () => {
                     </span>
                   }
                   onClick={() => {
-                    isLoggedIn
-                      ? alert("Your item is added to cart")
-                      : dispatch(setOpenLoginPopup(true));
+                    handleAddToCart(product._id, "black", 1, "M");
                   }}
                   className="w-full py-[6px] md:py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-200 text-[12px] sm:text-base"
                 />

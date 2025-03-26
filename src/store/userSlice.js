@@ -84,7 +84,6 @@ export const updateUser = createAsyncThunk(
           },
         }
       );
-      console.log(userData);
       return response.data; // Assuming API returns updated user data
     } catch (error) {
       return rejectWithValue(

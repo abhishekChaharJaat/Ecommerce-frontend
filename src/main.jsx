@@ -10,14 +10,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 createRoot(document.getElementById("root")).render(
- 
-    <Provider store={rootStore}>
-      <BrowserRouter>
-        <StrictMode>
+  <Provider store={rootStore}>
+    <BrowserRouter>
+      <StrictMode>
         <App />
-        <ToastContainer />
-        </StrictMode>
-      </BrowserRouter>
-    </Provider>
-
+        <ToastContainer autoClose={1000} />
+      </StrictMode>
+    </BrowserRouter>
+  </Provider>
 );
