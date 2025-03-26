@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { FaTrash, FaRegCreditCard, FaChevronLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { getCartItems, deleteCartItem } from "../store/productSlice";
+import { deleteCartItem, getCartItems } from "../store/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import PaymentModal from "../component/PaymentModal";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [cartWithProducts, setCartWithProducts] = useState([]);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false); // State for modal visibility
 
   const cartItems = useSelector((state) => state.productSlice.cartItems);
   const loading = useSelector((state) => state.productSlice.loading);
-
-  useEffect(() => {
-    dispatch(getCartItems());
-  }, [dispatch]);
 
   // Calculate total price
   const totalPrice = cartItems.reduce(
@@ -26,6 +24,20 @@ const Cart = () => {
   const formatPrice = (price) => {
     return `Rs. ${price.toLocaleString()}`;
   };
+
+  // Open Payment Modal
+  const handlePlaceOrder = () => {
+    setIsPaymentModalOpen(true);
+  };
+
+  // Close Payment Modal
+  const closePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+  };
+
+  useEffect(() => {
+    dispatch(getCartItems());
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
@@ -80,6 +92,7 @@ const Cart = () => {
           ))}
         </div>
       )}
+
       {/* Cart Summary */}
       <div className="mt-6 bg-white p-6 rounded-lg shadow-lg">
         <div className="flex justify-between mb-4">
@@ -90,7 +103,7 @@ const Cart = () => {
         </div>
         <div className="flex justify-end">
           <button
-            onClick={() => alert("Under construction")}
+            onClick={handlePlaceOrder}
             className="px-6 py-3 bg-slate-600 text-white font-medium text-lg rounded-lg hover:bg-slate-700 flex items-center space-x-2 transition-all duration-300 ease-in-out cursor-pointer"
           >
             <FaRegCreditCard />
@@ -98,6 +111,9 @@ const Cart = () => {
           </button>
         </div>
       </div>
+
+      {/* Payment Modal */}
+      <PaymentModal isOpen={isPaymentModalOpen} onClose={closePaymentModal} />
     </div>
   );
 };

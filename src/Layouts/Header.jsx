@@ -16,6 +16,7 @@ import {
 } from "../store/userSlice";
 import Button from "../component/Button";
 import SearchBar from "../component/SearchBar";
+import { getCartItems } from "../store/productSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
