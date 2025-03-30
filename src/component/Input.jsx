@@ -11,6 +11,7 @@ const Input = (props) => {
     className,
     value,
     disabled,
+    multiple
   } = props;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +35,7 @@ const Input = (props) => {
               value={value}
               onChange={onChange}
               disabled={disabled}
+              multiple={multiple}
             />
           </div>
         </div>

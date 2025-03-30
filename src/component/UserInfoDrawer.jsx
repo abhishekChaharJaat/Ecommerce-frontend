@@ -132,53 +132,53 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
             <p className="text-[18px] md:text-[20px] font-[600] italic">
               Personal Info
             </p>
-            <div className="flex items-center justify-between py-2 border-b border-gray-100">
-              <span className="font-medium text-gray-700 flex items-center gap-2">
+            <div className="flex items-center justify-between py-1 border-b border-gray-100">
+              <span className="font-medium text-xs text-gray-700 flex items-center gap-2">
                 <FaUser className="text-indigo-500" /> Name
               </span>
-              <span className="text-gray-600 text-sm md:text-base">
+              <span className="text-gray-600 text-xs md:text-base">
                 {" "}
                 {/* Adjusted text size for mobile vs desktop */}
                 {user?.name || "Not provided"}
               </span>
             </div>
-            <div className="flex items-center justify-between py-2 border-b border-gray-100">
-              <span className="font-medium text-gray-700 flex items-center gap-2">
+            <div className="flex items-center justify-between py-1 border-b border-gray-100">
+              <span className="font-medium text-xs text-gray-700 flex items-center gap-2">
                 <FaEnvelope className="text-indigo-500" /> Email
               </span>
-              <span className="text-gray-600 text-sm md:text-base">
+              <span className="text-gray-600 text-xs md:text-base">
                 {user?.email || "Not provided"}
               </span>
             </div>
-            <div className="flex items-center justify-between py-2 border-b border-gray-100">
-              <span className="font-medium text-gray-700 flex items-center gap-2">
+            <div className="flex items-center justify-between py-1 border-b border-gray-100">
+              <span className="font-medium text-gray-700 text-xs flex items-center gap-2">
                 <FaPhone className="text-indigo-500" /> Phone
               </span>
-              <span className="text-gray-600 text-sm md:text-base">
+              <span className="text-gray-600 text-xs md:text-base">
                 +91 {user?.phone || "Not provided"}
               </span>
             </div>
-            <div className="flex items-center justify-between py-2 border-b border-gray-100 gap-6">
-              <span className="font-medium text-gray-700 flex items-center gap-2">
+            <div className="flex items-center justify-between py-1 border-b border-gray-100 gap-6">
+              <span className="font-medium text-gray-700 text-xs flex items-center gap-2">
                 <FaMapMarkerAlt className="text-indigo-500" /> Address
               </span>
-              <span className="text-end text-gray-600 text-sm md:text-base">
+              <span className="text-end text-gray-600 text-xs md:text-base">
                 {user?.address || "Not provided"}
               </span>
             </div>
-            <div className="flex items-center justify-between py-2 border-b border-gray-100">
-              <span className="font-medium text-gray-700 flex items-center gap-2">
+            <div className="flex items-center justify-between py-1 border-b border-gray-100">
+              <span className="font-medium text-gray-700 text-xs flex items-center gap-2">
                 <PiMapPinSimpleAreaBold className="text-indigo-500" /> Pin code{" "}
               </span>
-              <span className="text-gray-600 text-sm md:text-base">
+              <span className="text-gray-600 text-xs md:text-base">
                 {user?.pincode || 0}
               </span>
             </div>
-            <div className="flex items-center justify-between py-2 border-b border-gray-100">
-              <span className="font-medium text-gray-700 flex items-center gap-2">
+            <div className="flex items-center justify-between py-1 border-b border-gray-100">
+              <span className="font-medium text-gray-700 text-xs flex items-center gap-2">
                 <FaVenus className="text-indigo-500" /> Gender{" "}
               </span>
-              <span className="text-gray-600 text-sm md:text-base">
+              <span className="text-gray-600 text-xs md:text-base">
                 {user?.gender || 0}
               </span>
             </div>

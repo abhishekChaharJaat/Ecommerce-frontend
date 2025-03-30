@@ -55,12 +55,14 @@ const Products = () => {
             >
               {/* Product Image */}
               <div className="relative">
+                <div className="p-2">
                 <img
                   onClick={() => handleProductClicked(product)}
                   src={product?.thumbnail}
                   alt="svb"
-                  className="w-full h-28 sm:h-48 object-cover cursor-pointer"
+                  className="w-full shadow-sm rounded-[8px] h-28 sm:h-72 object-cover cursor-pointer"
                 />
+                </div>
                 {product?.discount && (
                   <span
                     className={`${

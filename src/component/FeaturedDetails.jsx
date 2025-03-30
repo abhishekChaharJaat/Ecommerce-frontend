@@ -11,6 +11,8 @@ import Modal from "./Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { setShowSelectProduct, addToCart } from "../store/productSlice";
 import { setOpenLoginPopup } from "../store/userSlice";
+import Carousel from "./Carousel";
+
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const isShowSelectedProduct = useSelector(
@@ -96,13 +98,8 @@ const ProductDetails = () => {
     >
       <div className="container mx-auto p-4 md:w-[1000px]">
         <div className="w-full flex flex-col md:flex-row gap-8">
-          {/* Product Images */}
           <div className="w-full md:w-1/2">
-            <img
-              src={product.thumbnail}
-              alt={product.name}
-              className="w-full h-auto max-h-[395px] rounded-lg shadow-md mb-4 object-cover"
-            />
+            <Carousel images={product.images} />
           </div>
 
           {/* Product Details */}

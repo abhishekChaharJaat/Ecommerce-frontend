@@ -39,7 +39,7 @@ const AddNewProduct = () => {
     stock: "",
     isInStock: false,
     brand: "",
-    images: "",
+    images: [],
     thumbnail: "",
     ratings: "",
     reviewsCount: "",
@@ -54,41 +54,64 @@ const AddNewProduct = () => {
   // Handle input changes
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-
-    if (files && files[0]) {
-      const file = files[0];
-      // Check file size or any other validation you need
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        // Store the base64 string in formData.profilePicture
-        setProduct({
-          ...product,
-          thumbnail: reader.result, // This should be the base64 string (image)
+  
+    if (files && files.length > 0) {
+      // Handle multiple files for images field
+      if (name === "images") {
+        const filesArray = Array.from(files); // Convert FileList to an array
+        const fileReaders = filesArray.map((file) => {
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result); // Resolve with base64 string
+            reader.readAsDataURL(file); // Convert image to base64 string
+          });
         });
-      };
-      reader.readAsDataURL(file); // Convert image to base64 string
+  
+        // After all files are processed, update the images state
+        Promise.all(fileReaders).then((base64Strings) => {
+          setProduct((prev) => ({
+            ...prev,
+            images: base64Strings, // Store array of base64 strings
+          }));
+        });
+      }
+  
+      // Handle single file for thumbnail field
+      else if (name === "thumbnail") {
+        const file = files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setProduct({
+            ...product,
+            thumbnail: reader.result, // Store the base64 string for the thumbnail
+          });
+        };
+        reader.readAsDataURL(file); // Convert image to base64 string
+      }
     } else {
+      // For all other fields (text, checkbox, etc.)
       setProduct((prev) => ({
         ...prev,
         [name]: type === "checkbox" ? checked : value,
       }));
     }
   };
+  
 
   // Handle form submission
   const handleSubmit = (e) => {
     if (
       !product?.name ||
       !product?.description ||
-      !product?.category ||
-      !product?.subCategory ||
-      !product?.price ||
-      !product?.currency ||
-      !product?.stock ||
-      !product?.isInStock ||
-      !product?.brand ||
-      !product?.seller ||
-      !product?.returnPolicy
+      !product?.category 
+      // !product?.subCategory ||
+      // !product?.price ||
+      // !product?.currency ||
+      // !product?.stock ||
+      // !product?.isInStock ||
+      // !product?.brand ||
+      // !product?.seller ||
+      // !product?.returnPolicy
     ) {
       toast.error("Enter necessary details");
     } else {
@@ -108,7 +131,7 @@ const AddNewProduct = () => {
         stock: "",
         isInStock: true,
         brand: "",
-        images: "",
+        images: [],
         thumbnail: "",
         ratings: "0",
         reviewsCount: "0",
@@ -306,11 +329,11 @@ const AddNewProduct = () => {
             <Input
               label="Images"
               icon={<FaImage className="!text-gray-500" />}
-              type="text"
+              type="file"
               name="images"
-              value={product.images}
               onChange={handleChange}
               placeholder="e.g. url1, url2"
+              multiple={true}
               className="!rounded-lg !py-3 shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500"
             />
           </div>
