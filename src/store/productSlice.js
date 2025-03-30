@@ -125,15 +125,14 @@ export const deleteCartItem = createAsyncThunk(
 );
 
 // change-cart-status
-
 export const changeCartItemStatus = createAsyncThunk(
   "product/changeCartItemStatus",
   async ({ cartItemIds, status }, { rejectWithValue }) => {
     const token = localStorage.getItem("token");
-
-    if (!cartItemIds || !status) {
-      return rejectWithValue("Cart item IDs and status are required");
-    }
+    // if (!cartItemIds || !status) {
+    //   return rejectWithValue("Cart item IDs and status are required");
+    // }
+    console.log(cartItemIds, status); // Debugging line to check the values being sent
 
     try {
       const response = await axiosInstance.put(
@@ -154,6 +153,30 @@ export const changeCartItemStatus = createAsyncThunk(
   }
 );
 
+// Get all ordered items for Admin
+export const adminGetAllOrders = createAsyncThunk(
+  "product/adminGetAllOrders",
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axiosInstance.get(
+        "/api/v2/product/admin/ordered-items",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to Fetch product"
+      );
+    }
+  }
+);
+
 // Initial state
 const initialState = {
   products: [], // Could store added products if needed
@@ -165,6 +188,7 @@ const initialState = {
   isShowSelectedProduct: false,
   cartItems: [],
   isOrderPlaced: false,
+  orderedItemsForAdmin: [], // For admin view
 };
 
 // Create slice
@@ -285,6 +309,19 @@ const productSlice = createSlice({
         state.success = true;
       })
       .addCase(changeCartItemStatus.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(adminGetAllOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(adminGetAllOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.orderedItemsForAdmin = action.payload.cartItems || [];
+      })
+      .addCase(adminGetAllOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
