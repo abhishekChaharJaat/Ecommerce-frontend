@@ -55,10 +55,10 @@ const Header = () => {
               About
             </Link>
             <Link
-              to="/categories"
+              to="/my-orders"
               className="text-gray-600 hover:text-blue-600 transition-colors"
             >
-              Categories
+              My-orders
             </Link>
           </div>
 

@@ -2,6 +2,7 @@ import React from "react";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import EditUserInfoPopup from "../component/EditUserInfoPopup";
+import OrderPlacedPopup from "../component/OrderPlacedPopup";
 
 const Popups = () => {
   return (
@@ -9,6 +10,7 @@ const Popups = () => {
       <Signup />
       <Login />
       <EditUserInfoPopup />
+      <OrderPlacedPopup/>
     </div>
   );
 };

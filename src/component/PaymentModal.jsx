@@ -1,8 +1,24 @@
 import React from "react";
 import { FaCreditCard, FaPaypal, FaMoneyBillWave } from "react-icons/fa";
+import { changeCartItemStatus } from "../store/productSlice";
+import { useDispatch } from "react-redux";
+import { setIsOrderPlaced } from "../store/productSlice";
 
-const PaymentModal = ({ isOpen, onClose }) => {
+const PaymentModal = ({ isOpen, onClose, cartItemIds }) => {
+   const dispatch = useDispatch();
+
   if (!isOpen) return null; // Don't render the modal if it's not open
+
+  const handlePayment = (status) => {
+    dispatch(
+      changeCartItemStatus({
+        cartItemIds,   // Correctly passing IDs
+        status,        // Status of the order
+      })
+    );
+    dispatch(setIsOrderPlaced(true)) // Dispatching order placed action
+    onClose();         // Close the modal after dispatching
+  };
 
   return (
     <div
@@ -37,8 +53,8 @@ const PaymentModal = ({ isOpen, onClose }) => {
 
           {/* Cash on Delivery Button */}
           <button
-            onClick={() => alert("Cash on Delivery selected")}
-            className="flex items-center justify-start px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105"
+            className="flex items-center justify-start px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 cursor-pointer"
+             onClick={() => handlePayment("Processing")}
           >
             <FaMoneyBillWave className="mr-3 text-xl" />
             <span className="text-lg font-medium">Cash on Delivery</span>
@@ -48,7 +64,7 @@ const PaymentModal = ({ isOpen, onClose }) => {
           <button
             onClick={onClose}
             className="mt-6 w-full px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-all duration-300 transform hover:scale-105"
-          >
+           >
             Close
           </button>
         </div>

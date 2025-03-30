@@ -98,7 +98,7 @@ export const getCartItems = createAsyncThunk(
   }
 );
 
-// Delete a  cart items
+
 // Delete a cart item
 export const deleteCartItem = createAsyncThunk(
   "product/deleteCartItem",
@@ -124,6 +124,36 @@ export const deleteCartItem = createAsyncThunk(
   }
 );
 
+// change-cart-status
+
+export const changeCartItemStatus = createAsyncThunk(
+  "product/changeCartItemStatus",
+  async ({ cartItemIds, status }, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
+
+    if (!cartItemIds || !status) {
+      return rejectWithValue("Cart item IDs and status are required");
+    }
+
+    try {
+      const response = await axiosInstance.put(
+        `/api/v2/product/change-cart-status`,
+        { cartItemIds, status },  // Properly formatted request body
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,   // Use Bearer token format
+          },
+        }
+      );
+      return response.data;  // Return the response from the backend
+    } catch (error) {
+      console.error("Error:", error);
+      return rejectWithValue(error.response?.data?.message || "Failed to update cart status");
+    }
+  }
+);
+
 // Initial state
 const initialState = {
   products: [], // Could store added products if needed
@@ -134,6 +164,7 @@ const initialState = {
   selectedProduct: {},
   isShowSelectedProduct: false,
   cartItems: [],
+  isOrderPlaced: false,
 };
 
 // Create slice
@@ -151,6 +182,9 @@ const productSlice = createSlice({
       state.error = null;
       state.successMessage = null;
     },
+    setIsOrderPlaced: (state, action) => {
+      state.isOrderPlaced = action.payload;
+    }
   },
   extraReducers: (builder) => {
     // Handle addNewProduct pending state
@@ -241,6 +275,18 @@ const productSlice = createSlice({
       .addCase(deleteCartItem.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to delete product from cart";
+      })
+      .addCase(changeCartItemStatus.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(changeCartItemStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(changeCartItemStatus.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
@@ -251,5 +297,6 @@ export const {
   setSelectedProduct,
   setShowSelectProduct,
   resetProductErrorSuccess,
+  setIsOrderPlaced,
 } = productSlice.actions;
 export default productSlice.reducer;

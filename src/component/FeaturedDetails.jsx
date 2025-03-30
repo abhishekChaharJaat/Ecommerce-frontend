@@ -22,7 +22,7 @@ const ProductDetails = () => {
   const isLoggedIn = useSelector((state) => state.userSlice.isLoggedIn);
 
   const [selectedSize, setSelectedSize] = useState("");
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(1);   // Quantity selector
   const [color, setColor] = useState(1);
 
   // Function to render star ratings
@@ -52,20 +52,17 @@ const ProductDetails = () => {
     }
   };
 
-  // Function to render the size selection with clickable boxes
+  // Function to render the size selection
   const renderSizeSelection = () => {
     if (product.category === "Clothing" || product.category === "Footwear") {
       const sizes =
         product.category === "Clothing"
           ? ["S", "M", "L", "XL", "XXL"]
-          : ["6", "7", "8", "9", "10", "11"]; // Footwear sizes
+          : ["6", "7", "8", "9", "10", "11"]; 
 
       return (
         <div className="mb-4">
-          <label
-            htmlFor="size"
-            className="block text-gray-700 font-medium mb-2"
-          >
+          <label htmlFor="size" className="block text-gray-700 font-medium mb-2">
             Select Size:
           </label>
           <div className="flex gap-3 flex-wrap">
@@ -86,7 +83,7 @@ const ProductDetails = () => {
         </div>
       );
     }
-    return null; // Return null if no size selection is required
+    return null; 
   };
 
   return (
@@ -168,8 +165,32 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            {/* Size Selection (for Clothing and Footwear categories) */}
+            {/* Size Selection */}
             {renderSizeSelection()}
+
+            {/* Quantity Selector */}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-medium mb-2">
+                Select Quantity:
+              </label>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setQty((prev) => Math.max(1, prev - 1))}
+                  className="bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300"
+                >
+                  -
+                </button>
+                <span className="px-4 py-2 border rounded-md">
+                  {qty}
+                </span>
+                <button
+                  onClick={() => setQty((prev) => prev + 1)}
+                  className="bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300"
+                >
+                  +
+                </button>
+              </div>
+            </div>
 
             {/* Add to Cart Button */}
             <button

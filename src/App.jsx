@@ -8,6 +8,7 @@ import EditUserInfoPopup from "./component/EditUserInfoPopup.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
 import Cart from "./pages/Cart.jsx";
+import Myorders from "./pages/MyOrders.jsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/my-orders" element={<Myorders />} />
           </Route>
         </Routes>
         <EditUserInfoPopup />
