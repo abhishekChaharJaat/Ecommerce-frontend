@@ -118,13 +118,13 @@ const UserInfoDrawer = ({ isOpen, onClose }) => {
               About
             </Link>
             <Link
-              to="/categories"
+              to="/my-orders"
               className="text-[#18475A] font-[700] hover:text-blue-600 transition-colors"
               onClick={() => {
                 dispatch(setOpenUserInfoDrawer(false));
               }}
             >
-              Categories
+              My-Orders
             </Link>
           </div>
 
