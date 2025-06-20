@@ -33,7 +33,7 @@ const AllReceivedOrders = () => {
     const status = statusMap[id]; // Use the latest status
     const cartItemIds = [id]; // Assuming you want to update only one order at a time
     console.log(cartItemIds, status);
-    dispatch(changeCartItemStatus({cartItemIds, status}));
+    dispatch(changeCartItemStatus({ cartItemIds, status }));
   };
 
   return (
@@ -86,7 +86,7 @@ const AllReceivedOrders = () => {
                       {/* Status Dropdown */}
                       <td className="p-3">
                         <select
-                          value={order.status}  // Use local state
+                          value={statusMap[order._id] || order.status}
                           onChange={(e) =>
                             handleStatusChange(order._id, e.target.value)
                           }
@@ -103,7 +103,7 @@ const AllReceivedOrders = () => {
                       <td className="p-3">
                         <button
                           className="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded-md text-sm transition-all flex items-center gap-1 cursor-pointer"
-                          onClick={() => handleUpdateClick(order._id)}  // Corrected click handler
+                          onClick={() => handleUpdateClick(order._id)} // Corrected click handler
                         >
                           <FaEdit />
                           Update
