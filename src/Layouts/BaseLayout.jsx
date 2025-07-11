@@ -7,11 +7,11 @@ import Constants from "./Constants";
 
 const BaseLayout = (props) => {
   return (
-    <div className="flex min-h-screen flex-col max-w-[1440px] mx-auto">
+    <div className="flex min-h-screen flex-col w-full mx-auto">
       <Constants />
       <div>
         <Header />
-        <main className="flex-1 my-auto">{props.children}</main>
+        <main className="flex-1 my-auto mx-auto ">{props.children}</main>
         <Footer />
       </div>
       {/*============================== Drawers and Popups=================================*/}

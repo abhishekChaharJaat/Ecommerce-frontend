@@ -8,12 +8,12 @@ import PaymentModal from "../component/PaymentModal";
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false); 
-  const [cartItemIds, setCartItemIds] = useState([]); 
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [cartItemIds, setCartItemIds] = useState([]);
   const cartItems = useSelector((state) => state.productSlice.cartItems);
   const loading = useSelector((state) => state.productSlice.loading);
 
-  // ✅ Filter only cart items for total price calculation
+  //  Filter only cart items for total price calculation
   const cartOnlyItems = cartItems.filter((item) => item.status === "cart");
 
   // Calculate total price only for cart items
@@ -39,7 +39,7 @@ const Cart = () => {
 
   useEffect(() => {
     // Extract only cart item IDs
-    const ids = cartOnlyItems.map((item) => item._id);  
+    const ids = cartOnlyItems.map((item) => item._id);
     setCartItemIds(ids);
   }, [cartItems]);
 
@@ -116,7 +116,7 @@ const Cart = () => {
         <div className="flex justify-end">
           <button
             onClick={handlePlaceOrder}
-            disabled={cartOnlyItems.length === 0} 
+            disabled={cartOnlyItems.length === 0}
             className={`px-6 py-3 ${
               cartOnlyItems.length === 0
                 ? "bg-gray-400 cursor-not-allowed"

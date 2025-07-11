@@ -98,7 +98,6 @@ export const getCartItems = createAsyncThunk(
   }
 );
 
-
 // Delete a cart item
 export const deleteCartItem = createAsyncThunk(
   "product/deleteCartItem",
@@ -137,18 +136,20 @@ export const changeCartItemStatus = createAsyncThunk(
     try {
       const response = await axiosInstance.put(
         `/api/v2/product/change-cart-status`,
-        { cartItemIds, status },  // Properly formatted request body
+        { cartItemIds, status }, // Properly formatted request body
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: token,   // Use Bearer token format
+            Authorization: token, // Use Bearer token format
           },
         }
       );
-      return response.data;  // Return the response from the backend
+      return response.data; // Return the response from the backend
     } catch (error) {
       console.error("Error:", error);
-      return rejectWithValue(error.response?.data?.message || "Failed to update cart status");
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to update cart status"
+      );
     }
   }
 );
@@ -208,7 +209,7 @@ const productSlice = createSlice({
     },
     setIsOrderPlaced: (state, action) => {
       state.isOrderPlaced = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     // Handle addNewProduct pending state

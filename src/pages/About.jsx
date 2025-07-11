@@ -110,7 +110,7 @@ const About = () => {
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover border-b border-red-400"
                 />
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-900">

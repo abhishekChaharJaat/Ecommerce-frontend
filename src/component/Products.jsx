@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import { FaStar, FaCheckCircle, FaShoppingCart, FaTag } from "react-icons/fa";
-import { setOpenLoginPopup } from "../store/userSlice";
+import { setOpenLoginPopup,setOpenSigninPopup } from "../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setShowSelectProduct,
@@ -40,7 +40,7 @@ const Products = () => {
       dispatch(addToCart(data));
       console.log(data);
     } else {
-      dispatch(setOpenLoginPopup(true));
+      dispatch(setOpenSigninPopup(true));
     }
   };
 
