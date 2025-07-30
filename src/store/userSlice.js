@@ -1,6 +1,7 @@
 // userSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "./Config";
+import { showToast } from "../utils/toast";
 // Get user information
 
 export const fetchUserInfo = createAsyncThunk(
@@ -147,10 +148,12 @@ const userSlice = createSlice({
         state.user = action.payload.user || null; // Store user data if provided
         state.isOpenLoginPopup = false; // Close login popup
         state.successMessage = action.payload.message;
+        showToast.success(action.payload.message || "Login successful!");
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        showToast.error(action.payload || "Login failed");
       })
       // Signup case
       .addCase(signupUser.pending, (state) => {
@@ -164,10 +167,12 @@ const userSlice = createSlice({
         state.user = action.payload.user || null; // Store user data if provided
         state.isOpenSigninPopup = false;
         state.successMessage = action.payload.message;
+        showToast.success(action.payload.message || "Signup successful!");
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        showToast.error(action.payload || "Signup failed");
       })
       // Fetch user info cases
       .addCase(fetchUserInfo.pending, (state) => {
@@ -182,6 +187,7 @@ const userSlice = createSlice({
       .addCase(fetchUserInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        // Don't show toast for user info fetch failures (silent fail)
       })
       .addCase(updateUser.pending, (state) => {
         state.loading = true;
@@ -192,10 +198,12 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.isOpenEditProfilePopup = false; // Update the user data with the response
         state.successMessage = action.payload.message;
+        showToast.success(action.payload.message || "Profile updated successfully!");
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; // Set error message if update fails
+        showToast.error(action.payload || "Failed to update profile");
       });
   },
 });

@@ -3,6 +3,7 @@ import { FaShoppingBag } from "react-icons/fa";
 import { getAllProduct } from "../store/productSlice";
 import shop from "../Images/shop.png";
 import Products from "../component/Products";
+import ProductsLoading from "../component/ProductsLoading";
 import { useDispatch, useSelector } from "react-redux";
 import SearchBar from "../component/SearchBar";
 import FeaturedDetails from "../component/FeaturedDetails";
@@ -15,7 +16,7 @@ const Home = () => {
   }, [dispatch]);
 
   const isLoggedIn = useSelector((state) => state.userSlice.isLoggedIn);
-  const loading = useSelector((state) => state.userSlice.loading);
+  const loading = useSelector((state) => state.productSlice.loading);
   return (
     <>
       <div className="bg-gray-100">
@@ -56,16 +57,11 @@ const Home = () => {
 
         {/* Featured Products */}
         <div className="min-h-[400px]">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center bg-gray-50 py-6 tracking-tight ">
-         Featured Products
-       </h2>
-        {loading ? <div className="w-full h-[400px] bg-gray-50 flex justify-center items-center flex-col gap-[8px]">
-        <div className="w-8 h-8 border border-t-[2px] border-gray-800 border-solid rounded-full animate-spin"></div>
-         <p className="text-gray-500">Loading Products....</p>
-        </div> :
-        <Products />
-           }
-           </div>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center bg-gray-50 py-6 tracking-tight">
+            Featured Products
+          </h2>
+          {loading ? <ProductsLoading /> : <Products />}
+        </div>
       </div>
     </>
   );

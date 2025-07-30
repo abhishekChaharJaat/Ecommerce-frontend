@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaEdit, FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { changeCartItemStatus, deleteCartItem } from "../store/productSlice";
+import OrderSkeleton from "./OrderSkeleton";
 
 const AllReceivedOrders = () => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const AllReceivedOrders = () => {
   const orderedItemsForAdmin = useSelector(
     (state) => state.productSlice.orderedItemsForAdmin
   );
+  const loading = useSelector((state) => state.productSlice.loading);
   const [isFormOpen, setIsFormOpen] = useState(true);
 
   // Store the latest status for each order
@@ -63,7 +65,13 @@ const AllReceivedOrders = () => {
         } overflow-hidden`}
       >
         <div className="bg-white shadow-lg rounded-b-lg p-4 md:p-6">
-          {orderedItemsForAdmin.length > 0 ? (
+          {loading ? (
+            <div className="space-y-4">
+              {[...Array(5)].map((_, idx) => (
+                <OrderSkeleton key={idx} />
+              ))}
+            </div>
+          ) : orderedItemsForAdmin.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-sm md:text-base border-collapse">
                 <thead>

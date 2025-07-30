@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteCartItem, getCartItems } from "../store/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import PaymentModal from "../component/PaymentModal";
+import CartItemSkeleton from "../component/CartItemSkeleton";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -62,9 +63,10 @@ const Cart = () => {
 
       {/* Cart Items */}
       {loading ? (
-        <div className="w-full h-[200px] bg-gray-50 flex justify-center items-center flex-col gap-[8px]">
-          <div className="w-8 h-8 border border-t-[2px] border-gray-800 border-solid rounded-full animate-spin"></div>
-          <p className="text-gray-500">Loading Products....</p>
+        <div className="space-y-4">
+          {[...Array(3)].map((_, idx) => (
+            <CartItemSkeleton key={idx} />
+          ))}
         </div>
       ) : (
         <div className="space-y-6">

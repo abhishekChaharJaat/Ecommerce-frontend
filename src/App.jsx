@@ -9,10 +9,11 @@ import AdminPage from "./pages/AdminPage.jsx";
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
 import Cart from "./pages/Cart.jsx";
 import Myorders from "./pages/MyOrders.jsx";
+import ErrorBoundary from "./component/ErrorBoundary.jsx";
 
 function App() {
   return (
-    <>
+    <ErrorBoundary>
       <BaseLayout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -26,7 +27,7 @@ function App() {
         </Routes>
         <EditUserInfoPopup />
       </BaseLayout>
-    </>
+    </ErrorBoundary>
   );
 }
 

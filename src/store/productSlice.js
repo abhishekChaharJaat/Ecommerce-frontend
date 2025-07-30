@@ -1,22 +1,16 @@
 // productSlice.js (renamed for clarity, adjust as needed)
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "./Config";
+import { showToast } from "../utils/toast";
 
 // Add new product
 export const addNewProduct = createAsyncThunk(
   "product/createProduct",
   async (productData, { rejectWithValue }) => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axiosInstance.post(
         "/api/v2/product/add-new-product",
-        productData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${token}`, // Bearer token format is common, adjust if needed
-          },
-        }
+        productData
       );
       return response.data;
     } catch (error) {
@@ -31,17 +25,10 @@ export const addNewProduct = createAsyncThunk(
 export const addToCart = createAsyncThunk(
   "product/addToCart",
   async (productData, { rejectWithValue }) => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axiosInstance.post(
         "/api/v2/product/add-to-cart",
-        productData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${token}`,
-          },
-        }
+        productData
       );
       return response.data;
     } catch (error) {
@@ -58,12 +45,7 @@ export const getAllProduct = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(
-        "/api/v2/product/get-all-products",
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        "/api/v2/product/get-all-products"
       );
       return response.data;
     } catch (error) {
@@ -78,16 +60,9 @@ export const getAllProduct = createAsyncThunk(
 export const getCartItems = createAsyncThunk(
   "product/getCartItems",
   async (_, { rejectWithValue }) => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axiosInstance.get(
-        "/api/v2/product/fetch-cart-items",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
+        "/api/v2/product/fetch-cart-items"
       );
       return response.data;
     } catch (error) {
@@ -102,17 +77,10 @@ export const getCartItems = createAsyncThunk(
 export const deleteCartItem = createAsyncThunk(
   "product/deleteCartItem",
   async (cartItemId, { rejectWithValue }) => {
-    const token = localStorage.getItem("token");
     try {
       // Use the DELETE method to remove the item
       const response = await axiosInstance.delete(
-        `/api/v2/product/delete-cart-item/${cartItemId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
+        `/api/v2/product/delete-cart-item/${cartItemId}`
       );
       return response.data; // Return the response from the backend (success message)
     } catch (error) {
@@ -127,22 +95,12 @@ export const deleteCartItem = createAsyncThunk(
 export const changeCartItemStatus = createAsyncThunk(
   "product/changeCartItemStatus",
   async ({ cartItemIds, status }, { rejectWithValue }) => {
-    const token = localStorage.getItem("token");
-    // if (!cartItemIds || !status) {
-    //   return rejectWithValue("Cart item IDs and status are required");
-    // }
     console.log(cartItemIds, status); // Debugging line to check the values being sent
 
     try {
       const response = await axiosInstance.put(
         `/api/v2/product/change-cart-status`,
-        { cartItemIds, status }, // Properly formatted request body
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token, // Use Bearer token format
-          },
-        }
+        { cartItemIds, status } // Properly formatted request body
       );
       return response.data; // Return the response from the backend
     } catch (error) {
@@ -158,16 +116,9 @@ export const changeCartItemStatus = createAsyncThunk(
 export const adminGetAllOrders = createAsyncThunk(
   "product/adminGetAllOrders",
   async (_, { rejectWithValue }) => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axiosInstance.get(
-        "/api/v2/product/admin/ordered-items",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
+        "/api/v2/product/admin/ordered-items"
       );
       return response.data;
     } catch (error) {
@@ -224,6 +175,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.successMessage = action.payload.message;
+        showToast.success(action.payload.message || "Product added successfully!");
         // Optionally store the new product if returned in action.payload
         if (action.payload?.product) {
           state.products.push(action.payload.product);
@@ -234,6 +186,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Something went wrong";
         state.success = false;
+        showToast.error(action.payload || "Failed to add product");
       })
       // Get all products
       .addCase(getAllProduct.pending, (state) => {
@@ -250,6 +203,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Something went wrong";
         state.success = false;
+        showToast.error(action.payload || "Failed to load products");
       })
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
@@ -261,11 +215,13 @@ const productSlice = createSlice({
         state.error = null;
         state.success = true;
         state.successMessage = action.payload.message;
+        showToast.success(action.payload.message || "Added to cart!");
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.success = false;
+        showToast.error(action.payload || "Failed to add to cart");
       })
       .addCase(getCartItems.pending, (state) => {
         state.loading = true;
@@ -283,6 +239,9 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.success = false;
+        if (action.payload !== "Invalid or expired token, authorization denied.") {
+          showToast.error(action.payload || "Failed to load cart items");
+        }
       })
       .addCase(deleteCartItem.pending, (state) => {
         state.loading = true;
@@ -296,10 +255,12 @@ const productSlice = createSlice({
           (item) => item._id !== action.payload.id
         );
         state.successMessage = action.payload.message;
+        showToast.success(action.payload.message || "Item removed from cart");
       })
       .addCase(deleteCartItem.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to delete product from cart";
+        showToast.error(action.payload || "Failed to remove item from cart");
       })
       .addCase(changeCartItemStatus.pending, (state) => {
         state.loading = true;
@@ -308,10 +269,12 @@ const productSlice = createSlice({
       .addCase(changeCartItemStatus.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
+        showToast.success("Order placed successfully!");
       })
       .addCase(changeCartItemStatus.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        showToast.error(action.payload || "Failed to place order");
       })
       .addCase(adminGetAllOrders.pending, (state) => {
         state.loading = true;
@@ -325,6 +288,7 @@ const productSlice = createSlice({
       .addCase(adminGetAllOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        showToast.error(action.payload || "Failed to load orders");
       });
   },
 });
